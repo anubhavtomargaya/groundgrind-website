@@ -1,0 +1,575 @@
+{
+  "version": "1.0.0",
+  "description": "DSA Knowledge Graph Backbone Nodes",
+  "node_types": ["topic", "technique", "concept", "pattern", "algorithm"],
+  "nodes": [
+    {
+      "id": "T:array",
+      "type": "topic",
+      "title": "Arrays & Hashing",
+      "description": "Linear data structures with O(1) index access; hash-based lookups for O(1) average search"
+    },
+    {
+      "id": "T:two_pointers",
+      "type": "topic",
+      "title": "Two Pointers",
+      "description": "Using two indices to traverse data structures efficiently"
+    },
+    {
+      "id": "T:sliding_window",
+      "type": "topic",
+      "title": "Sliding Window",
+      "description": "Maintaining a window of elements that slides through data"
+    },
+    {
+      "id": "T:stack",
+      "type": "topic",
+      "title": "Stack",
+      "description": "LIFO data structure for tracking state or maintaining order"
+    },
+    {
+      "id": "T:binary_search",
+      "type": "topic",
+      "title": "Binary Search",
+      "description": "Divide-and-conquer search on sorted/monotonic data"
+    },
+    {
+      "id": "T:linked_list",
+      "type": "topic",
+      "title": "Linked Lists",
+      "description": "Node-based linear structures with pointer manipulation"
+    },
+    {
+      "id": "T:tree",
+      "type": "topic",
+      "title": "Trees",
+      "description": "Hierarchical structures with parent-child relationships"
+    },
+    {
+      "id": "T:graph",
+      "type": "topic",
+      "title": "Graphs",
+      "description": "Nodes connected by edges; may be directed or undirected"
+    },
+    {
+      "id": "T:dp",
+      "type": "topic",
+      "title": "Dynamic Programming",
+      "description": "Solving problems by combining solutions to overlapping subproblems"
+    },
+    {
+      "id": "T:greedy",
+      "type": "topic",
+      "title": "Greedy",
+      "description": "Making locally optimal choices hoping for global optimum"
+    },
+    {
+      "id": "T:heap",
+      "type": "topic",
+      "title": "Heap / Priority Queue",
+      "description": "Tree-based structure for efficient min/max retrieval"
+    },
+    {
+      "id": "T:bit",
+      "type": "topic",
+      "title": "Bit Manipulation",
+      "description": "Operating on individual bits of integers"
+    },
+    {
+      "id": "T:math",
+      "type": "topic",
+      "title": "Math & Number Theory",
+      "description": "Mathematical algorithms and number-theoretic techniques"
+    },
+    {
+      "id": "T:string",
+      "type": "topic",
+      "title": "Strings",
+      "description": "Character sequence processing and manipulation"
+    },
+
+    {
+      "id": "X:hashmap_lookup",
+      "type": "technique",
+      "title": "HashMap Lookup",
+      "description": "Using hash tables for O(1) average case lookups and insertions"
+    },
+    {
+      "id": "X:two_pointers",
+      "type": "technique",
+      "title": "Two Pointer Traversal",
+      "description": "Moving two pointers through data based on conditions"
+    },
+    {
+      "id": "X:sliding_window",
+      "type": "technique",
+      "title": "Sliding Window Expansion/Contraction",
+      "description": "Dynamically resizing a window while tracking validity"
+    },
+    {
+      "id": "X:prefix_sum",
+      "type": "technique",
+      "title": "Prefix Sum",
+      "description": "Precomputing cumulative sums for range queries"
+    },
+    {
+      "id": "X:monotonic_stack",
+      "type": "technique",
+      "title": "Monotonic Stack",
+      "description": "Stack maintaining sorted order for next greater/smaller problems"
+    },
+    {
+      "id": "X:binary_search",
+      "type": "technique",
+      "title": "Binary Search",
+      "description": "Halving search space using sorted property"
+    },
+    {
+      "id": "X:dfs",
+      "type": "technique",
+      "title": "Depth-First Search",
+      "description": "Exploring as deep as possible before backtracking"
+    },
+    {
+      "id": "X:bfs",
+      "type": "technique",
+      "title": "Breadth-First Search",
+      "description": "Exploring level by level; optimal for shortest path in unweighted graphs"
+    },
+    {
+      "id": "X:recursion",
+      "type": "technique",
+      "title": "Recursion",
+      "description": "Function calling itself to solve smaller subproblems"
+    },
+    {
+      "id": "X:memoization",
+      "type": "technique",
+      "title": "Memoization",
+      "description": "Caching computed results to avoid redundant work"
+    },
+    {
+      "id": "X:tabulation",
+      "type": "technique",
+      "title": "Bottom-Up Tabulation",
+      "description": "Building solution iteratively from base cases"
+    },
+    {
+      "id": "X:sorting",
+      "type": "technique",
+      "title": "Sorting",
+      "description": "Ordering elements to enable efficient algorithms"
+    },
+    {
+      "id": "X:partitioning",
+      "type": "technique",
+      "title": "Partitioning",
+      "description": "Dividing elements around a pivot value"
+    },
+    {
+      "id": "X:pointer_reversal",
+      "type": "technique",
+      "title": "Pointer Reversal",
+      "description": "Reversing links in a linked structure"
+    },
+    {
+      "id": "X:heap_operations",
+      "type": "technique",
+      "title": "Heap Push/Pop",
+      "description": "Maintaining heap property during insertions and removals"
+    },
+    {
+      "id": "X:bit_operations",
+      "type": "technique",
+      "title": "Bitwise Operations",
+      "description": "AND, OR, XOR, shifts for bit-level computation"
+    },
+    {
+      "id": "X:cycle_detection",
+      "type": "technique",
+      "title": "Cycle Detection",
+      "description": "Detecting loops in linked or graph structures"
+    },
+    {
+      "id": "X:topological_sort",
+      "type": "technique",
+      "title": "Topological Sort",
+      "description": "Linear ordering of vertices respecting dependencies"
+    },
+    {
+      "id": "X:divide_conquer",
+      "type": "technique",
+      "title": "Divide and Conquer",
+      "description": "Splitting problem into independent subproblems"
+    },
+    {
+      "id": "X:greedy_selection",
+      "type": "technique",
+      "title": "Greedy Selection",
+      "description": "Choosing the locally optimal option at each step"
+    },
+    {
+      "id": "X:three_pointers",
+      "type": "technique",
+      "title": "Three Pointer Partitioning",
+      "description": "Using three pointers for multi-way partitioning"
+    },
+
+    {
+      "id": "C:complement",
+      "type": "concept",
+      "title": "Complement Lookup",
+      "description": "Finding target - current to check for pairs"
+    },
+    {
+      "id": "C:prefix_sum",
+      "type": "concept",
+      "title": "Running Prefix Sum",
+      "description": "Cumulative sum up to each index"
+    },
+    {
+      "id": "C:suffix_product",
+      "type": "concept",
+      "title": "Suffix Product",
+      "description": "Product of all elements after each index"
+    },
+    {
+      "id": "C:running_max",
+      "type": "concept",
+      "title": "Running Max/Min",
+      "description": "Tracking maximum or minimum seen so far"
+    },
+    {
+      "id": "C:frequency_map",
+      "type": "concept",
+      "title": "Frequency Map",
+      "description": "Counting occurrences of each element"
+    },
+    {
+      "id": "C:visited_set",
+      "type": "concept",
+      "title": "Visited Set",
+      "description": "Tracking explored nodes to avoid cycles"
+    },
+    {
+      "id": "C:adjacency_list",
+      "type": "concept",
+      "title": "Adjacency List",
+      "description": "Graph representation as lists of neighbors"
+    },
+    {
+      "id": "C:valid_range",
+      "type": "concept",
+      "title": "Valid Range",
+      "description": "Bounds that constrain valid values"
+    },
+    {
+      "id": "C:state_definition",
+      "type": "concept",
+      "title": "DP State Definition",
+      "description": "What the DP array indices represent"
+    },
+    {
+      "id": "C:transition",
+      "type": "concept",
+      "title": "State Transition",
+      "description": "How to compute current state from previous states"
+    },
+    {
+      "id": "C:base_case",
+      "type": "concept",
+      "title": "Base Case",
+      "description": "Starting values for recursion or DP"
+    },
+    {
+      "id": "C:boundary",
+      "type": "concept",
+      "title": "Boundary Conditions",
+      "description": "Edge cases at array/tree boundaries"
+    },
+    {
+      "id": "C:space_optimization",
+      "type": "concept",
+      "title": "Space Optimization",
+      "description": "Reducing space by reusing variables"
+    },
+    {
+      "id": "C:index_mapping",
+      "type": "concept",
+      "title": "Index as Key",
+      "description": "Using array index as implicit hash key"
+    },
+    {
+      "id": "C:cancellation",
+      "type": "concept",
+      "title": "Value Cancellation",
+      "description": "Pairs canceling out (XOR, voting)"
+    },
+    {
+      "id": "C:left_boundary",
+      "type": "concept",
+      "title": "Left Boundary Tracking",
+      "description": "Tracking left edge of valid region"
+    },
+    {
+      "id": "C:right_boundary",
+      "type": "concept",
+      "title": "Right Boundary Tracking",
+      "description": "Tracking right edge of valid region"
+    },
+    {
+      "id": "C:window_validity",
+      "type": "concept",
+      "title": "Window Validity Condition",
+      "description": "When a sliding window satisfies constraints"
+    },
+    {
+      "id": "C:cycle_entrance",
+      "type": "concept",
+      "title": "Cycle Entrance Point",
+      "description": "Node where cycle begins in linked structure"
+    },
+    {
+      "id": "C:monotonicity",
+      "type": "concept",
+      "title": "Monotonicity",
+      "description": "Property of always increasing or decreasing"
+    },
+    {
+      "id": "C:optimal_substructure",
+      "type": "concept",
+      "title": "Optimal Substructure",
+      "description": "Optimal solution contains optimal sub-solutions"
+    },
+    {
+      "id": "C:overlapping_subproblems",
+      "type": "concept",
+      "title": "Overlapping Subproblems",
+      "description": "Same subproblems solved multiple times"
+    },
+    {
+      "id": "C:greedy_choice",
+      "type": "concept",
+      "title": "Greedy Choice Property",
+      "description": "Local optimal leads to global optimal"
+    },
+    {
+      "id": "C:last_seen_index",
+      "type": "concept",
+      "title": "Last Seen Index",
+      "description": "Tracking most recent position of each element"
+    },
+    {
+      "id": "C:three_color",
+      "type": "concept",
+      "title": "Three-Color State",
+      "description": "Unvisited/In-progress/Done for cycle detection"
+    },
+    {
+      "id": "C:wildcard_pattern",
+      "type": "concept",
+      "title": "Wildcard Pattern Matching",
+      "description": "Using wildcards to group similar strings"
+    },
+
+    {
+      "id": "P:one_pass_hash",
+      "type": "pattern",
+      "title": "One-Pass HashMap",
+      "description": "Build and query hashmap in single pass"
+    },
+    {
+      "id": "P:two_pointer_converge",
+      "type": "pattern",
+      "title": "Converging Two Pointers",
+      "description": "Pointers moving toward each other from ends"
+    },
+    {
+      "id": "P:sliding_window_variable",
+      "type": "pattern",
+      "title": "Variable-Size Sliding Window",
+      "description": "Window that expands and contracts"
+    },
+    {
+      "id": "P:next_greater",
+      "type": "pattern",
+      "title": "Next Greater Element",
+      "description": "Finding next larger element for each position"
+    },
+    {
+      "id": "P:histogram_area",
+      "type": "pattern",
+      "title": "Histogram Max Area",
+      "description": "Computing largest rectangle in histogram"
+    },
+    {
+      "id": "P:modified_binary_search",
+      "type": "pattern",
+      "title": "Modified Binary Search",
+      "description": "Binary search with custom comparison logic"
+    },
+    {
+      "id": "P:partition_search",
+      "type": "pattern",
+      "title": "Partition-Based Search",
+      "description": "Using partition to find kth element"
+    },
+    {
+      "id": "P:list_reversal",
+      "type": "pattern",
+      "title": "Linked List Reversal",
+      "description": "Reversing linked list in-place"
+    },
+    {
+      "id": "P:k_way_merge",
+      "type": "pattern",
+      "title": "K-Way Merge",
+      "description": "Merging k sorted sequences efficiently"
+    },
+    {
+      "id": "P:tree_path_sum",
+      "type": "pattern",
+      "title": "Tree Path Sum",
+      "description": "Computing path sums through tree nodes"
+    },
+    {
+      "id": "P:range_validation",
+      "type": "pattern",
+      "title": "Range Validation",
+      "description": "Validating values against inherited bounds"
+    },
+    {
+      "id": "P:lca",
+      "type": "pattern",
+      "title": "Lowest Common Ancestor",
+      "description": "Finding deepest shared ancestor in tree"
+    },
+    {
+      "id": "P:connected_components",
+      "type": "pattern",
+      "title": "Connected Components",
+      "description": "Counting/identifying disjoint subgraphs"
+    },
+    {
+      "id": "P:topological_order",
+      "type": "pattern",
+      "title": "Topological Ordering",
+      "description": "Linear order respecting dependencies"
+    },
+    {
+      "id": "P:shortest_path_unweighted",
+      "type": "pattern",
+      "title": "Shortest Path (Unweighted)",
+      "description": "BFS for shortest path in unweighted graph"
+    },
+    {
+      "id": "P:linear_dp",
+      "type": "pattern",
+      "title": "Linear DP",
+      "description": "DP with single dimension state"
+    },
+    {
+      "id": "P:unbounded_knapsack",
+      "type": "pattern",
+      "title": "Unbounded Knapsack",
+      "description": "Items can be used unlimited times"
+    },
+    {
+      "id": "P:lis",
+      "type": "pattern",
+      "title": "Longest Increasing Subsequence",
+      "description": "Finding longest strictly increasing subsequence"
+    },
+    {
+      "id": "P:interval_merge",
+      "type": "pattern",
+      "title": "Interval Merging",
+      "description": "Merging overlapping intervals"
+    },
+    {
+      "id": "P:k_selection",
+      "type": "pattern",
+      "title": "Kth Element Selection",
+      "description": "Finding kth smallest/largest efficiently"
+    },
+    {
+      "id": "P:prefix_suffix_product",
+      "type": "pattern",
+      "title": "Prefix-Suffix Product",
+      "description": "Computing product excluding current element"
+    },
+    {
+      "id": "P:subarray_sum",
+      "type": "pattern",
+      "title": "Subarray Sum with HashMap",
+      "description": "Using prefix sums with hashmap for target sum"
+    },
+
+    {
+      "id": "A:kadane",
+      "type": "algorithm",
+      "title": "Kadane's Algorithm",
+      "description": "O(n) maximum subarray sum"
+    },
+    {
+      "id": "A:boyer_moore",
+      "type": "algorithm",
+      "title": "Boyer-Moore Voting",
+      "description": "O(n) time O(1) space majority element"
+    },
+    {
+      "id": "A:dutch_national_flag",
+      "type": "algorithm",
+      "title": "Dutch National Flag",
+      "description": "Three-way partitioning in single pass"
+    },
+    {
+      "id": "A:floyd_cycle",
+      "type": "algorithm",
+      "title": "Floyd's Cycle Detection",
+      "description": "Tortoise and hare for cycle detection"
+    },
+    {
+      "id": "A:kernighan",
+      "type": "algorithm",
+      "title": "Kernighan's Bit Count",
+      "description": "Count set bits by clearing lowest each time"
+    },
+    {
+      "id": "A:sieve",
+      "type": "algorithm",
+      "title": "Sieve of Eratosthenes",
+      "description": "Generate all primes up to n"
+    },
+    {
+      "id": "A:cyclic_sort",
+      "type": "algorithm",
+      "title": "Cyclic Sort",
+      "description": "Place elements at their correct indices"
+    },
+    {
+      "id": "A:quickselect",
+      "type": "algorithm",
+      "title": "Quickselect",
+      "description": "O(n) average kth element selection"
+    },
+    {
+      "id": "A:patience_sort",
+      "type": "algorithm",
+      "title": "Patience Sorting",
+      "description": "O(n log n) LIS using binary search"
+    },
+    {
+      "id": "A:kahn",
+      "type": "algorithm",
+      "title": "Kahn's Topological Sort",
+      "description": "BFS-based topological ordering"
+    },
+    {
+      "id": "A:xor_single",
+      "type": "algorithm",
+      "title": "XOR Cancellation",
+      "description": "XOR all elements to find unique one"
+    }
+  ]
+}

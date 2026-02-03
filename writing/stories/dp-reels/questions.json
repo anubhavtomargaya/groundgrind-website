@@ -1,0 +1,1808 @@
+[
+  {
+    "id": "dsa_001",
+    "leetcode_number": 1,
+    "title": "Two Sum",
+    "topic": "Arrays & Hashing",
+    "difficulty": "easy",
+    "frequency": "very_high",
+    "companies": [
+      "Google",
+      "Amazon",
+      "Meta",
+      "Apple",
+      "Microsoft"
+    ],
+    "description": "Given an array of integers `nums` and an integer `target`, return the indices of the two numbers such that they add up to `target`.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.\n\nYou can return the answer in any order.",
+    "constraints": [
+      "2 <= nums.length <= 10^4",
+      "-10^9 <= nums[i] <= 10^9",
+      "-10^9 <= target <= 10^9",
+      "Only one valid answer exists."
+    ],
+    "examples": [
+      {
+        "input": "nums = [2,7,11,15], target = 9",
+        "output": "[0,1]",
+        "explanation": "Because nums[0] + nums[1] == 9, we return [0, 1]."
+      },
+      {
+        "input": "nums = [3,2,4], target = 6",
+        "output": "[1,2]",
+        "explanation": "nums[1] + nums[2] = 2 + 4 = 6."
+      },
+      {
+        "input": "nums = [3,3], target = 6",
+        "output": "[0,1]",
+        "explanation": "Both elements are 3, and they sum to 6."
+      }
+    ],
+    "core_trick": "Use a hashmap to store complements. For each number, check if (target - num) already exists in the map. One-pass: insert and check simultaneously.",
+    "algorithm": "Hash Map Lookup",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "hashmap",
+      "complement"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def twoSum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        comp = target - num\n        if comp in seen:\n            return [seen[comp], i]\n        seen[num] = i",
+      "line_comments": {
+        "2": "hashmap: value → index",
+        "4": "compute the complement",
+        "5": "complement already seen? done",
+        "7": "store current number's index"
+      }
+    }
+  },
+  {
+    "id": "dsa_002",
+    "leetcode_number": 560,
+    "title": "Subarray Sum Equals K",
+    "topic": "Arrays & Hashing",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Meta",
+      "Google",
+      "Amazon",
+      "Microsoft"
+    ],
+    "description": "Given an array of integers `nums` and an integer `k`, return the total number of subarrays whose sum equals to `k`.\n\nA subarray is a contiguous non-empty sequence of elements within an array.",
+    "constraints": [
+      "1 <= nums.length <= 2 * 10^4",
+      "-1000 <= nums[i] <= 1000",
+      "-10^7 <= k <= 10^7"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,1,1], k = 2",
+        "output": "2",
+        "explanation": "The subarrays [1,1] starting at index 0 and index 1 both sum to 2."
+      },
+      {
+        "input": "nums = [1,2,3], k = 3",
+        "output": "2",
+        "explanation": "Subarrays [1,2] and [3] both sum to 3."
+      }
+    ],
+    "core_trick": "Track prefix sums in a hashmap. At each index, compute running sum and check if (currentSum - k) exists as a previous prefix sum. That means the subarray between those two points sums to k.",
+    "algorithm": "Prefix Sum + HashMap",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "prefix_sum",
+      "hashmap",
+      "subarray"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def subarraySum(nums, k):\n    count = 0\n    prefix = 0\n    seen = {0: 1}\n    for num in nums:\n        prefix += num\n        count += seen.get(prefix - k, 0)\n        seen[prefix] = seen.get(prefix, 0) + 1\n    return count",
+      "line_comments": {
+        "3": "running prefix sum",
+        "4": "base case: empty prefix = 0 seen once",
+        "6": "add current number to prefix",
+        "7": "how many earlier prefixes give sum k?",
+        "8": "record this prefix sum"
+      }
+    }
+  },
+  {
+    "id": "dsa_003",
+    "leetcode_number": 238,
+    "title": "Product of Array Except Self",
+    "topic": "Arrays & Hashing",
+    "difficulty": "medium",
+    "frequency": "high",
+    "companies": [
+      "Amazon",
+      "Meta",
+      "Apple"
+    ],
+    "description": "Given an integer array `nums`, return an array `answer` such that `answer[i]` is equal to the product of all the elements of `nums` except `nums[i]`.\n\nThe product of any prefix or suffix of `nums` is guaranteed to fit in a 32-bit integer.\n\nYou must write an algorithm that runs in O(n) time and without using the division operation.",
+    "constraints": [
+      "2 <= nums.length <= 10^5",
+      "-30 <= nums[i] <= 30",
+      "The product of any prefix or suffix of nums fits in a 32-bit integer."
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,4]",
+        "output": "[24,12,8,6]",
+        "explanation": "For index 0: 2*3*4=24. For index 1: 1*3*4=12. And so on."
+      },
+      {
+        "input": "nums = [-1,1,0,-3,3]",
+        "output": "[0,0,9,0,0]",
+        "explanation": "Any product including the 0 at index 2 becomes 0. Product excluding index 2 is (-1)*1*(-3)*3 = 9."
+      }
+    ],
+    "core_trick": "Two passes: left-to-right builds prefix products, right-to-left builds suffix products. For each index, answer = prefix[i-1] * suffix[i+1]. Can be done in-place using the output array.",
+    "algorithm": "Prefix & Suffix Products",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "prefix",
+      "suffix",
+      "product"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def productExceptSelf(nums):\n    n = len(nums)\n    ans = [1] * n\n    prefix = 1\n    for i in range(n):\n        ans[i] = prefix\n        prefix *= nums[i]\n    suffix = 1\n    for i in range(n - 1, -1, -1):\n        ans[i] *= suffix\n        suffix *= nums[i]\n    return ans",
+      "line_comments": {
+        "3": "output array, initialized to 1",
+        "4": "left-to-right running product",
+        "6": "store product of everything before i",
+        "7": "extend prefix to include nums[i]",
+        "8": "right-to-left running product",
+        "10": "multiply by product of everything after i",
+        "11": "extend suffix to include nums[i]"
+      }
+    }
+  },
+  {
+    "id": "dsa_004",
+    "leetcode_number": 53,
+    "title": "Maximum Subarray",
+    "topic": "Arrays & Hashing",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft",
+      "Apple"
+    ],
+    "description": "Given an integer array `nums`, find the subarray with the largest sum, and return its sum.\n\nA subarray is a contiguous non-empty sequence of elements within an array.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+        "output": "6",
+        "explanation": "The subarray [4,-1,2,1] has the largest sum 6."
+      },
+      {
+        "input": "nums = [1]",
+        "output": "1",
+        "explanation": "Single element is the subarray."
+      },
+      {
+        "input": "nums = [5,4,-1,7,8]",
+        "output": "23",
+        "explanation": "The entire array [5,4,-1,7,8] has sum 23."
+      }
+    ],
+    "core_trick": "Kadane's algorithm: at each position, decide — extend the current subarray or start fresh? current = max(num, current + num). If the running sum becomes negative, it's better to restart. Track the global maximum throughout.",
+    "algorithm": "Kadane's Algorithm",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "kadane",
+      "subarray",
+      "greedy"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def maxSubArray(nums):\n    curr = nums[0]\n    best = nums[0]\n    for num in nums[1:]:\n        curr = max(num, curr + num)\n        best = max(best, curr)\n    return best",
+      "line_comments": {
+        "2": "current subarray sum",
+        "3": "global best seen so far",
+        "5": "extend or restart?",
+        "6": "update global max"
+      }
+    }
+  },
+  {
+    "id": "dsa_005",
+    "leetcode_number": 42,
+    "title": "Trapping Rain Water",
+    "topic": "Two Pointers",
+    "difficulty": "hard",
+    "frequency": "very_high",
+    "companies": [
+      "Google",
+      "Amazon",
+      "Meta",
+      "Goldman Sachs"
+    ],
+    "description": "Given `n` non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.",
+    "constraints": [
+      "n == height.length",
+      "1 <= n <= 2 * 10^4",
+      "0 <= height[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "height = [0,1,0,2,1,0,1,3,2,1,2,1]",
+        "output": "6",
+        "explanation": "6 units of rain water are trapped between the bars. The water fills the valleys between taller bars."
+      },
+      {
+        "input": "height = [4,2,0,3,2,5]",
+        "output": "9",
+        "explanation": "Water fills between the bars of height 4 and 5, trapping 9 units total."
+      }
+    ],
+    "core_trick": "Two pointers from both edges. Water at any position = min(leftMax, rightMax) - height[i]. Always move the pointer with the smaller max inward, because that side is the bottleneck. No need for precomputed arrays.",
+    "algorithm": "Two Pointer with Running Max",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "two_pointers",
+      "prefix_max"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def trap(height):\n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n    while left < right:\n        if height[left] < height[right]:\n            left_max = max(left_max, height[left])\n            water += left_max - height[left]\n            left += 1\n        else:\n            right_max = max(right_max, height[right])\n            water += right_max - height[right]\n            right -= 1\n    return water",
+      "line_comments": {
+        "2": "two pointers from edges",
+        "3": "track max height from each side",
+        "6": "process the shorter side",
+        "7": "update left boundary max",
+        "8": "water = boundary - current height",
+        "11": "update right boundary max",
+        "12": "water = boundary - current height"
+      }
+    }
+  },
+  {
+    "id": "dsa_006",
+    "leetcode_number": 15,
+    "title": "3Sum",
+    "topic": "Two Pointers",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Meta",
+      "Amazon",
+      "Google",
+      "Apple"
+    ],
+    "description": "Given an integer array `nums`, return all the triplets `[nums[i], nums[j], nums[k]]` such that `i != j`, `i != k`, and `j != k`, and `nums[i] + nums[j] + nums[k] == 0`.\n\nNotice that the solution set must not contain duplicate triplets.",
+    "constraints": [
+      "3 <= nums.length <= 3000",
+      "-10^5 <= nums[i] <= 10^5"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-1,0,1,2,-1,-4]",
+        "output": "[[-1,-1,2],[-1,0,1]]",
+        "explanation": "nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0. nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0. The distinct triplets are [-1,0,1] and [-1,-1,2]."
+      },
+      {
+        "input": "nums = [0,1,1]",
+        "output": "[]",
+        "explanation": "The only possible triplet does not sum up to 0."
+      },
+      {
+        "input": "nums = [0,0,0]",
+        "output": "[[0,0,0]]",
+        "explanation": "The only possible triplet sums up to 0."
+      }
+    ],
+    "core_trick": "Sort the array. Fix one number (iterate left to right), then use two pointers (left, right) on the remaining portion to find pairs summing to the negative of the fixed number. Skip duplicates at all three levels to avoid repeated triplets.",
+    "algorithm": "Sort + Two Pointers",
+    "time_complexity": "O(n²)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "two_pointers",
+      "sorting",
+      "dedup"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def threeSum(nums):\n    nums.sort()\n    res = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        lo, hi = i + 1, len(nums) - 1\n        while lo < hi:\n            s = nums[i] + nums[lo] + nums[hi]\n            if s < 0:\n                lo += 1\n            elif s > 0:\n                hi -= 1\n            else:\n                res.append([nums[i], nums[lo], nums[hi]])\n                while lo < hi and nums[lo] == nums[lo + 1]:\n                    lo += 1\n                while lo < hi and nums[hi] == nums[hi - 1]:\n                    hi -= 1\n                lo += 1\n                hi -= 1\n    return res",
+      "line_comments": {
+        "2": "sort to enable two pointers",
+        "5": "skip duplicate fixed elements",
+        "7": "two pointers on remaining portion",
+        "9": "compute triplet sum",
+        "10": "too small → move left up",
+        "12": "too big → move right down",
+        "14": "found a valid triplet",
+        "15": "skip duplicate left values",
+        "17": "skip duplicate right values"
+      }
+    }
+  },
+  {
+    "id": "dsa_007",
+    "leetcode_number": 3,
+    "title": "Longest Substring Without Repeating Characters",
+    "topic": "Sliding Window",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta",
+      "Microsoft",
+      "Apple"
+    ],
+    "description": "Given a string `s`, find the length of the longest substring without repeating characters.\n\nA substring is a contiguous non-empty sequence of characters within a string.",
+    "constraints": [
+      "0 <= s.length <= 5 * 10^4",
+      "s consists of English letters, digits, symbols and spaces."
+    ],
+    "examples": [
+      {
+        "input": "s = \"abcabcbb\"",
+        "output": "3",
+        "explanation": "The answer is \"abc\", with the length of 3."
+      },
+      {
+        "input": "s = \"bbbbb\"",
+        "output": "1",
+        "explanation": "The answer is \"b\", with the length of 1."
+      },
+      {
+        "input": "s = \"pwwkew\"",
+        "output": "3",
+        "explanation": "The answer is \"wke\". Note that \"pwke\" is a subsequence, not a substring."
+      }
+    ],
+    "core_trick": "Sliding window with a hashmap storing each character's last-seen index. Expand the right pointer each step. When a duplicate is found, jump the left pointer to max(left, lastSeen[char] + 1). Track max window size.",
+    "algorithm": "Sliding Window + HashMap",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(min(m,n))",
+    "tags": [
+      "sliding_window",
+      "hashmap",
+      "string"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def lengthOfLongestSubstring(s):\n    seen = {}\n    left = 0\n    best = 0\n    for right, ch in enumerate(s):\n        if ch in seen and seen[ch] >= left:\n            left = seen[ch] + 1\n        seen[ch] = right\n        best = max(best, right - left + 1)\n    return best",
+      "line_comments": {
+        "2": "char → last seen index",
+        "3": "left edge of window",
+        "6": "duplicate inside current window?",
+        "7": "shrink window past the duplicate",
+        "8": "update last seen position",
+        "9": "track max window size"
+      }
+    }
+  },
+  {
+    "id": "dsa_008",
+    "leetcode_number": 76,
+    "title": "Minimum Window Substring",
+    "topic": "Sliding Window",
+    "difficulty": "hard",
+    "frequency": "very_high",
+    "companies": [
+      "Meta",
+      "Google",
+      "Amazon",
+      "Uber"
+    ],
+    "description": "Given two strings `s` and `t` of lengths `m` and `n` respectively, return the minimum window substring of `s` such that every character in `t` (including duplicates) is included in the window. If there is no such substring, return the empty string `\"\"`.\n\nThe testcases will be generated such that the answer is unique.",
+    "constraints": [
+      "m == s.length",
+      "n == t.length",
+      "1 <= m, n <= 10^5",
+      "s and t consist of uppercase and lowercase English letters."
+    ],
+    "examples": [
+      {
+        "input": "s = \"ADOBECODEBANC\", t = \"ABC\"",
+        "output": "\"BANC\"",
+        "explanation": "The minimum window substring \"BANC\" includes 'A', 'B', and 'C' from string t."
+      },
+      {
+        "input": "s = \"a\", t = \"a\"",
+        "output": "\"a\"",
+        "explanation": "The entire string s is the minimum window."
+      },
+      {
+        "input": "s = \"a\", t = \"aa\"",
+        "output": "\"\"",
+        "explanation": "Both 'a's from t must be included, but s only has one 'a'."
+      }
+    ],
+    "core_trick": "Two-phase sliding window: expand right to satisfy all required chars (tracked by frequency map + 'formed' counter). Once all chars are satisfied, shrink left to minimize the window. Record the smallest valid window seen.",
+    "algorithm": "Sliding Window + Frequency Map",
+    "time_complexity": "O(m + n)",
+    "space_complexity": "O(m + n)",
+    "tags": [
+      "sliding_window",
+      "frequency_map",
+      "string"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "from collections import Counter\n\ndef minWindow(s, t):\n    need = Counter(t)\n    missing = len(t)\n    left = start = end = 0\n    for right, ch in enumerate(s, 1):\n        if need[ch] > 0:\n            missing -= 1\n        need[ch] -= 1\n        if missing == 0:\n            while need[s[left]] < 0:\n                need[s[left]] += 1\n                left += 1\n            if not end or right - left < end - start:\n                start, end = left, right\n            need[s[left]] += 1\n            missing += 1\n            left += 1\n    return s[start:end]",
+      "line_comments": {
+        "3": "frequency map of required chars",
+        "4": "total chars still needed",
+        "7": "expand right edge",
+        "8": "this char was actually needed",
+        "10": "consume it from the window",
+        "11": "all chars satisfied?",
+        "12": "shrink left past excess chars",
+        "15": "record smallest valid window",
+        "17": "break validity to keep searching"
+      }
+    }
+  },
+  {
+    "id": "dsa_009",
+    "leetcode_number": 84,
+    "title": "Largest Rectangle in Histogram",
+    "topic": "Stack",
+    "difficulty": "hard",
+    "frequency": "very_high",
+    "companies": [
+      "Google",
+      "Amazon",
+      "Microsoft"
+    ],
+    "description": "Given an array of integers `heights` representing the histogram's bar height where the width of each bar is 1, return the area of the largest rectangle in the histogram.",
+    "constraints": [
+      "1 <= heights.length <= 10^5",
+      "0 <= heights[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "heights = [2,1,5,6,2,3]",
+        "output": "10",
+        "explanation": "The largest rectangle has area = 5 * 2 = 10, formed by bars at indices 2 and 3 (heights 5 and 6, limited to height 5)."
+      },
+      {
+        "input": "heights = [2,4]",
+        "output": "4",
+        "explanation": "The largest rectangle is the bar at index 1 with height 4 and width 1."
+      }
+    ],
+    "core_trick": "Monotonic increasing stack of indices. When a bar shorter than stack top is encountered, pop and compute area: height = heights[popped], width = current_index - new_stack_top - 1. The stack naturally tracks the left boundary for each bar.",
+    "algorithm": "Monotonic Stack",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "monotonic_stack",
+      "histogram"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def largestRectangleArea(heights):\n    stack = []\n    max_area = 0\n    heights.append(0)\n    for i, h in enumerate(heights):\n        while stack and heights[stack[-1]] > h:\n            height = heights[stack.pop()]\n            width = i if not stack else i - stack[-1] - 1\n            max_area = max(max_area, height * width)\n        stack.append(i)\n    heights.pop()\n    return max_area",
+      "line_comments": {
+        "2": "monotonic increasing stack of indices",
+        "4": "sentinel 0 to flush remaining bars",
+        "6": "pop bars taller than current",
+        "7": "popped bar's height",
+        "8": "width spans from stack top to current",
+        "9": "update max area"
+      }
+    }
+  },
+  {
+    "id": "dsa_010",
+    "leetcode_number": 739,
+    "title": "Daily Temperatures",
+    "topic": "Stack",
+    "difficulty": "medium",
+    "frequency": "high",
+    "companies": [
+      "Amazon",
+      "Google"
+    ],
+    "description": "Given an array of integers `temperatures` represents the daily temperatures, return an array `answer` such that `answer[i]` is the number of days you have to wait after the `i`th day to get a warmer temperature. If there is no future day for which this is possible, keep `answer[i] == 0` instead.",
+    "constraints": [
+      "1 <= temperatures.length <= 10^5",
+      "30 <= temperatures[i] <= 100"
+    ],
+    "examples": [
+      {
+        "input": "temperatures = [73,74,75,71,69,72,76,73]",
+        "output": "[1,1,4,2,1,1,0,0]",
+        "explanation": "For day 0 (73°), next warmer is day 1 (74°) → wait 1 day. For day 2 (75°), next warmer is day 6 (76°) → wait 4 days."
+      },
+      {
+        "input": "temperatures = [30,40,50,60]",
+        "output": "[1,1,1,0]",
+        "explanation": "Each day (except last) has a warmer day immediately after."
+      },
+      {
+        "input": "temperatures = [30,60,90]",
+        "output": "[1,1,0]",
+        "explanation": "Strictly increasing — each waits 1 day, last has no warmer day."
+      }
+    ],
+    "core_trick": "Monotonic decreasing stack of indices. For each new temperature, pop all indices from the stack where the temperature was lower — the current day is their answer. Push the current index. Anything left in the stack at the end has no warmer day (answer stays 0).",
+    "algorithm": "Monotonic Decreasing Stack",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "monotonic_stack",
+      "next_greater"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def dailyTemperatures(temperatures):\n    n = len(temperatures)\n    ans = [0] * n\n    stack = []\n    for i, temp in enumerate(temperatures):\n        while stack and temperatures[stack[-1]] < temp:\n            j = stack.pop()\n            ans[j] = i - j\n        stack.append(i)\n    return ans",
+      "line_comments": {
+        "3": "result array, default 0",
+        "4": "monotonic decreasing stack of indices",
+        "6": "current temp is warmer than stack top?",
+        "7": "pop the cooler day",
+        "8": "days waited = index gap"
+      }
+    }
+  },
+  {
+    "id": "dsa_011",
+    "leetcode_number": 33,
+    "title": "Search in Rotated Sorted Array",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Meta",
+      "Amazon",
+      "Google",
+      "Microsoft"
+    ],
+    "description": "There is an integer array `nums` sorted in ascending order (with distinct values). Prior to being passed to your function, `nums` is possibly rotated at an unknown pivot index `k` (1 <= k < nums.length) such that the resulting array is `[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]`.\n\nGiven the array `nums` after the possible rotation and an integer `target`, return the index of `target` if it is in `nums`, or `-1` if it is not in `nums`.\n\nYou must write an algorithm with O(log n) runtime complexity.",
+    "constraints": [
+      "1 <= nums.length <= 5000",
+      "-10^4 <= nums[i] <= 10^4",
+      "All values of nums are unique.",
+      "-10^4 <= target <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [4,5,6,7,0,1,2], target = 0",
+        "output": "4",
+        "explanation": "0 is at index 4 in the rotated array."
+      },
+      {
+        "input": "nums = [4,5,6,7,0,1,2], target = 3",
+        "output": "-1",
+        "explanation": "3 is not in the array."
+      },
+      {
+        "input": "nums = [1], target = 0",
+        "output": "-1",
+        "explanation": "Single element array, 0 not found."
+      }
+    ],
+    "core_trick": "In a rotated sorted array, one half is always fully sorted. Find mid, determine which half is sorted (compare nums[left] with nums[mid]). Check if target lies in the sorted half — if yes, search there; otherwise search the other half.",
+    "algorithm": "Modified Binary Search",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "binary_search",
+      "rotated_array"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def search(nums, target):\n    lo, hi = 0, len(nums) - 1\n    while lo <= hi:\n        mid = (lo + hi) // 2\n        if nums[mid] == target:\n            return mid\n        if nums[lo] <= nums[mid]:\n            if nums[lo] <= target < nums[mid]:\n                hi = mid - 1\n            else:\n                lo = mid + 1\n        else:\n            if nums[mid] < target <= nums[hi]:\n                lo = mid + 1\n            else:\n                hi = mid - 1\n    return -1",
+      "line_comments": {
+        "4": "standard midpoint",
+        "7": "left half is sorted",
+        "8": "target in sorted left half?",
+        "11": "right half is sorted",
+        "12": "target in sorted right half?"
+      }
+    }
+  },
+  {
+    "id": "dsa_012",
+    "leetcode_number": 4,
+    "title": "Median of Two Sorted Arrays",
+    "topic": "Binary Search",
+    "difficulty": "hard",
+    "frequency": "very_high",
+    "companies": [
+      "Google",
+      "Amazon",
+      "Meta",
+      "Apple"
+    ],
+    "description": "Given two sorted arrays `nums1` and `nums2` of size `m` and `n` respectively, return the median of the two sorted arrays.\n\nThe overall run time complexity should be O(log (m+n)).",
+    "constraints": [
+      "nums1.length == m",
+      "nums2.length == n",
+      "0 <= m <= 1000",
+      "0 <= n <= 1000",
+      "1 <= m + n <= 2000",
+      "-10^6 <= nums1[i], nums2[i] <= 10^6"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,3], nums2 = [2]",
+        "output": "2.00000",
+        "explanation": "Merged array = [1,2,3] and median is 2."
+      },
+      {
+        "input": "nums1 = [1,2], nums2 = [3,4]",
+        "output": "2.50000",
+        "explanation": "Merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5."
+      }
+    ],
+    "core_trick": "Binary search on the shorter array to find the correct partition point. The left partition of both arrays combined must have exactly (m+n+1)/2 elements. At a valid partition: maxLeft1 <= minRight2 AND maxLeft2 <= minRight1. The median is derived from these four boundary values.",
+    "algorithm": "Binary Search on Partition",
+    "time_complexity": "O(log(min(m,n)))",
+    "space_complexity": "O(1)",
+    "tags": [
+      "binary_search",
+      "partition",
+      "median"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def findMedianSortedArrays(nums1, nums2):\n    if len(nums1) > len(nums2):\n        nums1, nums2 = nums2, nums1\n    m, n = len(nums1), len(nums2)\n    lo, hi = 0, m\n    while lo <= hi:\n        i = (lo + hi) // 2\n        j = (m + n + 1) // 2 - i\n        left1 = nums1[i-1] if i > 0 else float('-inf')\n        right1 = nums1[i] if i < m else float('inf')\n        left2 = nums2[j-1] if j > 0 else float('-inf')\n        right2 = nums2[j] if j < n else float('inf')\n        if left1 <= right2 and left2 <= right1:\n            if (m + n) % 2:\n                return max(left1, left2)\n            return (max(left1, left2) + min(right1, right2)) / 2\n        elif left1 > right2:\n            hi = i - 1\n        else:\n            lo = i + 1",
+      "line_comments": {
+        "3": "always binary search on smaller array",
+        "7": "partition point in nums1",
+        "8": "complementary partition in nums2",
+        "9": "boundary values (use -inf/inf for edges)",
+        "13": "valid partition found?",
+        "14": "odd total → max of left side",
+        "16": "even total → average of middle two",
+        "17": "left1 too big → move partition left"
+      }
+    }
+  },
+  {
+    "id": "dsa_013",
+    "leetcode_number": 206,
+    "title": "Reverse Linked List",
+    "topic": "Linked Lists",
+    "difficulty": "easy",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Microsoft",
+      "Google",
+      "Meta"
+    ],
+    "description": "Given the `head` of a singly linked list, reverse the list, and return the reversed list.",
+    "constraints": [
+      "The number of nodes in the list is in the range [0, 5000].",
+      "-5000 <= Node.val <= 5000"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5]",
+        "output": "[5,4,3,2,1]",
+        "explanation": "The linked list is reversed: 5→4→3→2→1."
+      },
+      {
+        "input": "head = [1,2]",
+        "output": "[2,1]",
+        "explanation": "Two-node list reversed."
+      },
+      {
+        "input": "head = []",
+        "output": "[]",
+        "explanation": "Empty list stays empty."
+      }
+    ],
+    "core_trick": "Three pointers: prev (starts null), curr (starts at head), next (temp save). Each iteration: save next, reverse curr's pointer to prev, advance prev and curr forward. When curr is null, prev is the new head.",
+    "algorithm": "Iterative Pointer Reversal",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "linked_list",
+      "pointer_manipulation"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def reverseList(head):\n    prev = None\n    curr = head\n    while curr:\n        nxt = curr.next\n        curr.next = prev\n        prev = curr\n        curr = nxt\n    return prev",
+      "line_comments": {
+        "2": "reversed portion starts empty",
+        "3": "current node to process",
+        "5": "save next before breaking link",
+        "6": "reverse the pointer",
+        "7": "advance prev",
+        "8": "advance curr"
+      }
+    }
+  },
+  {
+    "id": "dsa_014",
+    "leetcode_number": 23,
+    "title": "Merge k Sorted Lists",
+    "topic": "Linked Lists",
+    "difficulty": "hard",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "description": "You are given an array of `k` linked-lists `lists`, each linked-list is sorted in ascending order.\n\nMerge all the linked-lists into one sorted linked-list and return it.",
+    "constraints": [
+      "k == lists.length",
+      "0 <= k <= 10^4",
+      "0 <= lists[i].length <= 500",
+      "-10^4 <= lists[i][j] <= 10^4",
+      "lists[i] is sorted in ascending order.",
+      "The sum of lists[i].length will not exceed 10^4."
+    ],
+    "examples": [
+      {
+        "input": "lists = [[1,4,5],[1,3,4],[2,6]]",
+        "output": "[1,1,2,3,4,4,5,6]",
+        "explanation": "Merging all three sorted lists into one sorted list."
+      },
+      {
+        "input": "lists = []",
+        "output": "[]",
+        "explanation": "Empty input returns empty list."
+      },
+      {
+        "input": "lists = [[]]",
+        "output": "[]",
+        "explanation": "Single empty list returns empty."
+      }
+    ],
+    "core_trick": "Use a min-heap of size k. Push the head node of each list. Repeatedly pop the smallest node, append it to the result, and push that node's next (if it exists). The heap always gives you the global minimum across all k lists.",
+    "algorithm": "Min-Heap Merge",
+    "time_complexity": "O(N log k)",
+    "space_complexity": "O(k)",
+    "tags": [
+      "linked_list",
+      "heap",
+      "merge"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "import heapq\n\ndef mergeKLists(lists):\n    heap = []\n    for i, lst in enumerate(lists):\n        if lst:\n            heapq.heappush(heap, (lst.val, i, lst))\n    dummy = curr = ListNode(0)\n    while heap:\n        val, i, node = heapq.heappop(heap)\n        curr.next = node\n        curr = curr.next\n        if node.next:\n            heapq.heappush(heap, (node.next.val, i, node.next))\n    return dummy.next",
+      "line_comments": {
+        "4": "min-heap: (value, list_index, node)",
+        "6": "push head of each non-empty list",
+        "8": "dummy head for result list",
+        "10": "pop smallest across all lists",
+        "11": "append to result",
+        "13": "push next node from same list"
+      }
+    }
+  },
+  {
+    "id": "dsa_015",
+    "leetcode_number": 124,
+    "title": "Binary Tree Maximum Path Sum",
+    "topic": "Trees",
+    "difficulty": "hard",
+    "frequency": "very_high",
+    "companies": [
+      "Meta",
+      "Google",
+      "Amazon",
+      "Microsoft"
+    ],
+    "description": "A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them. A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.\n\nThe path sum of a path is the sum of the node's values in the path.\n\nGiven the `root` of a binary tree, return the maximum path sum of any non-empty path.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [1, 3 * 10^4].",
+      "-1000 <= Node.val <= 1000"
+    ],
+    "examples": [
+      {
+        "input": "root = [1,2,3]",
+        "output": "6",
+        "explanation": "The optimal path is 2 → 1 → 3 with a path sum of 2 + 1 + 3 = 6."
+      },
+      {
+        "input": "root = [-10,9,20,null,null,15,7]",
+        "output": "42",
+        "explanation": "The optimal path is 15 → 20 → 7 with a path sum of 15 + 20 + 7 = 42."
+      }
+    ],
+    "core_trick": "Post-order DFS. At each node, compute max single-branch gain (what we can offer to the parent): node.val + max(left, right, 0). Meanwhile, update a global max with the 'arch' path through this node: node.val + max(left, 0) + max(right, 0). Clamping to 0 means we drop negative branches.",
+    "algorithm": "Post-order DFS + Global Max",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(h)",
+    "tags": [
+      "tree",
+      "dfs",
+      "path_sum"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def maxPathSum(root):\n    best = [float('-inf')]\n\n    def dfs(node):\n        if not node:\n            return 0\n        left = max(dfs(node.left), 0)\n        right = max(dfs(node.right), 0)\n        best[0] = max(best[0], node.val + left + right)\n        return node.val + max(left, right)\n\n    dfs(root)\n    return best[0]",
+      "line_comments": {
+        "2": "global max (use list for closure)",
+        "5": "base case: null → 0 gain",
+        "7": "clamp negative branches to 0",
+        "9": "arch path through this node",
+        "10": "return best single branch to parent"
+      }
+    }
+  },
+  {
+    "id": "dsa_016",
+    "leetcode_number": 98,
+    "title": "Validate Binary Search Tree",
+    "topic": "Trees",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Meta",
+      "Microsoft",
+      "Google"
+    ],
+    "description": "Given the `root` of a binary tree, determine if it is a valid binary search tree (BST).\n\nA valid BST is defined as follows:\n- The left subtree of a node contains only nodes with keys less than the node's key.\n- The right subtree of a node contains only nodes with keys greater than the node's key.\n- Both the left and right subtrees must also be binary search trees.",
+    "constraints": [
+      "The number of nodes in the tree is in the range [1, 10^4].",
+      "-2^31 <= Node.val <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "root = [2,1,3]",
+        "output": "true",
+        "explanation": "Left child 1 < root 2 < right child 3. Valid BST."
+      },
+      {
+        "input": "root = [5,1,4,null,null,3,6]",
+        "output": "false",
+        "explanation": "The root node's value is 5 but its right child's value is 4, which is less than 5."
+      }
+    ],
+    "core_trick": "Pass a valid range (min, max) down the recursion. Each node must be within the range set by ALL its ancestors, not just its parent. Go left: update max to current node. Go right: update min to current node. Common mistake: only comparing parent-child.",
+    "algorithm": "Recursive Range Validation",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(h)",
+    "tags": [
+      "tree",
+      "bst",
+      "recursion",
+      "range"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def isValidBST(root):\n    def check(node, lo, hi):\n        if not node:\n            return True\n        if node.val <= lo or node.val >= hi:\n            return False\n        return (check(node.left, lo, node.val) and\n                check(node.right, node.val, hi))\n\n    return check(root, float('-inf'), float('inf'))",
+      "line_comments": {
+        "3": "null node is always valid",
+        "5": "must be strictly within (lo, hi) range",
+        "7": "left subtree: tighten upper bound",
+        "8": "right subtree: tighten lower bound",
+        "10": "start with (-inf, inf) range"
+      }
+    }
+  },
+  {
+    "id": "dsa_017",
+    "leetcode_number": 236,
+    "title": "Lowest Common Ancestor of a Binary Tree",
+    "topic": "Trees",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Meta",
+      "Amazon",
+      "Google",
+      "Microsoft"
+    ],
+    "description": "Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.\n\nThe lowest common ancestor is defined between two nodes `p` and `q` as the lowest node in `T` that has both `p` and `q` as descendants (where we allow a node to be a descendant of itself).",
+    "constraints": [
+      "The number of nodes in the tree is in the range [2, 10^5].",
+      "-10^9 <= Node.val <= 10^9",
+      "All Node.val are unique.",
+      "p != q",
+      "p and q will exist in the tree."
+    ],
+    "examples": [
+      {
+        "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 1",
+        "output": "3",
+        "explanation": "The LCA of nodes 5 and 1 is 3 (the root)."
+      },
+      {
+        "input": "root = [3,5,1,6,2,0,8,null,null,7,4], p = 5, q = 4",
+        "output": "5",
+        "explanation": "The LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself."
+      }
+    ],
+    "core_trick": "Recurse left and right. Base case: if node is null, p, or q — return it. If both left and right return non-null, this node is the LCA (p and q are in different subtrees). If only one side returns non-null, propagate that result up.",
+    "algorithm": "Recursive LCA",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(h)",
+    "tags": [
+      "tree",
+      "recursion",
+      "lca"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def lowestCommonAncestor(root, p, q):\n    if not root or root == p or root == q:\n        return root\n    left = lowestCommonAncestor(root.left, p, q)\n    right = lowestCommonAncestor(root.right, p, q)\n    if left and right:\n        return root\n    return left or right",
+      "line_comments": {
+        "2": "base: null or found p/q",
+        "4": "search left subtree",
+        "5": "search right subtree",
+        "6": "both sides found → this is the LCA",
+        "8": "only one side found → propagate it up"
+      }
+    }
+  },
+  {
+    "id": "dsa_018",
+    "leetcode_number": 207,
+    "title": "Course Schedule",
+    "topic": "Graphs",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "description": "There are a total of `numCourses` courses you have to take, labeled from `0` to `numCourses - 1`. You are given an array `prerequisites` where `prerequisites[i] = [a_i, b_i]` indicates that you must take course `b_i` first if you want to take course `a_i`.\n\nReturn `true` if you can finish all courses. Otherwise, return `false`.",
+    "constraints": [
+      "1 <= numCourses <= 2000",
+      "0 <= prerequisites.length <= 5000",
+      "prerequisites[i].length == 2",
+      "0 <= a_i, b_i < numCourses",
+      "All the pairs prerequisites[i] are unique."
+    ],
+    "examples": [
+      {
+        "input": "numCourses = 2, prerequisites = [[1,0]]",
+        "output": "true",
+        "explanation": "Take course 0 first, then course 1. Possible."
+      },
+      {
+        "input": "numCourses = 2, prerequisites = [[1,0],[0,1]]",
+        "output": "false",
+        "explanation": "Course 0 requires 1 and course 1 requires 0. Circular dependency — impossible."
+      }
+    ],
+    "core_trick": "This is cycle detection in a directed graph. Use DFS with 3 states per node: unvisited, in-progress (on current DFS path), completed. If you encounter an in-progress node during DFS, there's a cycle. Alternative: Kahn's algorithm (BFS topological sort) — if not all nodes are processed, a cycle exists.",
+    "algorithm": "DFS Cycle Detection (3-color)",
+    "time_complexity": "O(V + E)",
+    "space_complexity": "O(V + E)",
+    "tags": [
+      "graph",
+      "topological_sort",
+      "cycle_detection"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def canFinish(numCourses, prerequisites):\n    graph = [[] for _ in range(numCourses)]\n    for a, b in prerequisites:\n        graph[b].append(a)\n    state = [0] * numCourses  # 0=unvisited, 1=in-progress, 2=done\n\n    def dfs(node):\n        if state[node] == 1:\n            return False\n        if state[node] == 2:\n            return True\n        state[node] = 1\n        for nei in graph[node]:\n            if not dfs(nei):\n                return False\n        state[node] = 2\n        return True\n\n    return all(dfs(i) for i in range(numCourses))",
+      "line_comments": {
+        "2": "build adjacency list",
+        "5": "3-color state tracking",
+        "8": "in-progress → cycle detected!",
+        "10": "already fully explored → safe",
+        "11": "mark as in-progress",
+        "15": "mark as completed",
+        "18": "check all nodes (handles disconnected)"
+      }
+    }
+  },
+  {
+    "id": "dsa_019",
+    "leetcode_number": 127,
+    "title": "Word Ladder",
+    "topic": "Graphs",
+    "difficulty": "hard",
+    "frequency": "high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta"
+    ],
+    "description": "A transformation sequence from word `beginWord` to word `endWord` using a dictionary `wordList` is a sequence of words `beginWord -> s1 -> s2 -> ... -> sk` such that:\n- Every adjacent pair of words differs by a single letter.\n- Every `si` for `1 <= i <= k` is in `wordList`. Note that `beginWord` does not need to be in `wordList`.\n- `sk == endWord`\n\nGiven two words, `beginWord` and `endWord`, and a dictionary `wordList`, return the number of words in the shortest transformation sequence from `beginWord` to `endWord`, or `0` if no such sequence exists.",
+    "constraints": [
+      "1 <= beginWord.length <= 10",
+      "endWord.length == beginWord.length",
+      "1 <= wordList.length <= 5000",
+      "wordList[i].length == beginWord.length",
+      "beginWord, endWord, and wordList[i] consist of lowercase English letters.",
+      "beginWord != endWord",
+      "All the words in wordList are unique."
+    ],
+    "examples": [
+      {
+        "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\",\"cog\"]",
+        "output": "5",
+        "explanation": "hit → hot → dot → dog → cog (5 words in the sequence)."
+      },
+      {
+        "input": "beginWord = \"hit\", endWord = \"cog\", wordList = [\"hot\",\"dot\",\"dog\",\"lot\",\"log\"]",
+        "output": "0",
+        "explanation": "endWord \"cog\" is not in wordList, so no transformation is possible."
+      }
+    ],
+    "core_trick": "BFS on an implicit graph where words are nodes and edges connect words differing by one letter. Pre-process: build a map of wildcard patterns (e.g., h*t → [hit, hot]) for O(1) neighbor lookup instead of comparing all pairs. BFS guarantees shortest path.",
+    "algorithm": "BFS + Wildcard Neighbor Map",
+    "time_complexity": "O(n * m²)",
+    "space_complexity": "O(n * m)",
+    "tags": [
+      "graph",
+      "bfs",
+      "string",
+      "shortest_path"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "from collections import deque, defaultdict\n\ndef ladderLength(beginWord, endWord, wordList):\n    if endWord not in wordList:\n        return 0\n    wordList = set(wordList)\n    neighbors = defaultdict(list)\n    for word in wordList | {beginWord}:\n        for i in range(len(word)):\n            pattern = word[:i] + '*' + word[i+1:]\n            neighbors[pattern].append(word)\n    queue = deque([(beginWord, 1)])\n    visited = {beginWord}\n    while queue:\n        word, steps = queue.popleft()\n        for i in range(len(word)):\n            pattern = word[:i] + '*' + word[i+1:]\n            for nei in neighbors[pattern]:\n                if nei == endWord:\n                    return steps + 1\n                if nei not in visited:\n                    visited.add(nei)\n                    queue.append((nei, steps + 1))\n    return 0",
+      "line_comments": {
+        "7": "wildcard pattern → matching words",
+        "9": "h*t matches hit, hot, hat, etc.",
+        "12": "BFS guarantees shortest path",
+        "17": "generate all wildcard patterns",
+        "18": "check all words matching this pattern",
+        "20": "reached the target!",
+        "22": "enqueue unvisited neighbors"
+      }
+    }
+  },
+  {
+    "id": "dsa_020",
+    "leetcode_number": 198,
+    "title": "House Robber",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft"
+    ],
+    "description": "You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security systems connected and it will automatically contact the police if two adjacent houses were broken into on the same night.\n\nGiven an integer array `nums` representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.",
+    "constraints": [
+      "1 <= nums.length <= 100",
+      "0 <= nums[i] <= 400"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,1]",
+        "output": "4",
+        "explanation": "Rob house 1 (money = 1) and then rob house 3 (money = 3). Total = 1 + 3 = 4."
+      },
+      {
+        "input": "nums = [2,7,9,3,1]",
+        "output": "12",
+        "explanation": "Rob house 1 (money = 2), rob house 3 (money = 9) and rob house 5 (money = 1). Total = 2 + 9 + 1 = 12."
+      }
+    ],
+    "core_trick": "At each house, choose the better option: rob this house + best from two houses back, or skip this house and keep the best from previous house. dp[i] = max(nums[i] + dp[i-2], dp[i-1]). Only two variables needed — no array required.",
+    "algorithm": "1D DP with Space Optimization",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "dp",
+      "linear",
+      "space_optimization"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def rob(nums):\n    prev2 = 0\n    prev1 = 0\n    for num in nums:\n        curr = max(prev1, prev2 + num)\n        prev2 = prev1\n        prev1 = curr\n    return prev1",
+      "line_comments": {
+        "2": "best from 2 houses back",
+        "3": "best from 1 house back",
+        "5": "skip this house OR rob it + prev2",
+        "6": "shift window forward",
+        "7": "shift window forward"
+      }
+    }
+  },
+  {
+    "id": "dsa_021",
+    "leetcode_number": 322,
+    "title": "Coin Change",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "description": "You are given an integer array `coins` representing coins of different denominations and an integer `amount` representing a total amount of money.\n\nReturn the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return `-1`.\n\nYou may assume that you have an infinite number of each kind of coin.",
+    "constraints": [
+      "1 <= coins.length <= 12",
+      "1 <= coins[i] <= 2^31 - 1",
+      "0 <= amount <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "coins = [1,5,11], amount = 15",
+        "output": "3",
+        "explanation": "15 = 5 + 5 + 5. Note: greedy (11+1+1+1+1) would give 5 coins — DP is necessary."
+      },
+      {
+        "input": "coins = [2], amount = 3",
+        "output": "-1",
+        "explanation": "Cannot make 3 with only coins of denomination 2."
+      },
+      {
+        "input": "coins = [1], amount = 0",
+        "output": "0",
+        "explanation": "Zero amount needs zero coins."
+      }
+    ],
+    "core_trick": "Bottom-up DP: dp[i] = minimum coins for amount i. Initialize dp[0] = 0, rest = infinity. For each amount from 1 to target, try every coin: dp[i] = min(dp[i], dp[i - coin] + 1). This is unbounded knapsack — greedy fails on cases like coins=[1,5,11], amount=15.",
+    "algorithm": "Bottom-Up DP (Unbounded Knapsack)",
+    "time_complexity": "O(amount * n)",
+    "space_complexity": "O(amount)",
+    "tags": [
+      "dp",
+      "knapsack",
+      "unbounded"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def coinChange(coins, amount):\n    dp = [float('inf')] * (amount + 1)\n    dp[0] = 0\n    for i in range(1, amount + 1):\n        for coin in coins:\n            if coin <= i:\n                dp[i] = min(dp[i], dp[i - coin] + 1)\n    return dp[amount] if dp[amount] != float('inf') else -1",
+      "line_comments": {
+        "2": "dp[i] = min coins for amount i",
+        "3": "base: 0 coins for amount 0",
+        "5": "try each coin denomination",
+        "7": "use this coin + best for remainder",
+        "8": "inf means impossible"
+      }
+    }
+  },
+  {
+    "id": "dsa_022",
+    "leetcode_number": 300,
+    "title": "Longest Increasing Subsequence",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft",
+      "Meta"
+    ],
+    "description": "Given an integer array `nums`, return the length of the longest strictly increasing subsequence.\n\nA subsequence is an array that can be derived from another array by deleting some or no elements without changing the order of the remaining elements.",
+    "constraints": [
+      "1 <= nums.length <= 2500",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [10,9,2,5,3,7,101,18]",
+        "output": "4",
+        "explanation": "The longest increasing subsequence is [2,3,7,101], with length 4."
+      },
+      {
+        "input": "nums = [0,1,0,3,2,3]",
+        "output": "4",
+        "explanation": "The longest increasing subsequence is [0,1,2,3]."
+      },
+      {
+        "input": "nums = [7,7,7,7,7,7,7]",
+        "output": "1",
+        "explanation": "All elements are the same — longest strictly increasing subsequence has length 1."
+      }
+    ],
+    "core_trick": "Maintain a 'tails' array representing the smallest tail element for each LIS length. For each number, binary search to find where it fits. If it extends the longest subsequence, append. If not, replace the first element in tails that's >= current number. Length of tails = LIS length. This is called patience sorting.",
+    "algorithm": "Patience Sorting (Binary Search)",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "dp",
+      "binary_search",
+      "lis",
+      "patience_sort"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "from bisect import bisect_left\n\ndef lengthOfLIS(nums):\n    tails = []\n    for num in nums:\n        pos = bisect_left(tails, num)\n        if pos == len(tails):\n            tails.append(num)\n        else:\n            tails[pos] = num\n    return len(tails)",
+      "line_comments": {
+        "3": "tails[i] = smallest tail for LIS of length i+1",
+        "5": "where does this number fit?",
+        "6": "extends the longest subsequence",
+        "8": "replaces a larger tail (keeps options open)",
+        "9": "length of tails = LIS length"
+      }
+    }
+  },
+  {
+    "id": "dsa_023",
+    "leetcode_number": 139,
+    "title": "Word Break",
+    "topic": "Dynamic Programming",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Meta",
+      "Google",
+      "Microsoft"
+    ],
+    "description": "Given a string `s` and a dictionary of strings `wordDict`, return `true` if `s` can be segmented into a space-separated sequence of one or more dictionary words.\n\nNote that the same word in the dictionary may be reused multiple times in the segmentation.",
+    "constraints": [
+      "1 <= s.length <= 300",
+      "1 <= wordDict.length <= 1000",
+      "1 <= wordDict[i].length <= 20",
+      "s and wordDict[i] consist of only lowercase English letters.",
+      "All the strings of wordDict are unique."
+    ],
+    "examples": [
+      {
+        "input": "s = \"leetcode\", wordDict = [\"leet\",\"code\"]",
+        "output": "true",
+        "explanation": "\"leetcode\" can be segmented as \"leet code\"."
+      },
+      {
+        "input": "s = \"applepenapple\", wordDict = [\"apple\",\"pen\"]",
+        "output": "true",
+        "explanation": "\"applepenapple\" = \"apple\" + \"pen\" + \"apple\". Reuse of words is allowed."
+      },
+      {
+        "input": "s = \"catsandog\", wordDict = [\"cats\",\"dog\",\"sand\",\"and\",\"cat\"]",
+        "output": "false",
+        "explanation": "No valid segmentation exists."
+      }
+    ],
+    "core_trick": "1D boolean DP: dp[i] = can we segment s[0:i]? dp[0] = true (empty string). For each position i, check every word in the dictionary: if dp[i - len(word)] is true AND s[i-len..i] equals the word, set dp[i] = true. Answer is dp[n].",
+    "algorithm": "1D DP + Word Matching",
+    "time_complexity": "O(n² * m)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "dp",
+      "string",
+      "dictionary"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def wordBreak(s, wordDict):\n    n = len(s)\n    dp = [False] * (n + 1)\n    dp[0] = True\n    for i in range(1, n + 1):\n        for word in wordDict:\n            wl = len(word)\n            if i >= wl and dp[i - wl] and s[i-wl:i] == word:\n                dp[i] = True\n                break\n    return dp[n]",
+      "line_comments": {
+        "3": "dp[i] = can we segment s[0:i]?",
+        "4": "empty string is segmentable",
+        "6": "try each dictionary word",
+        "8": "prefix is valid AND word matches suffix?",
+        "9": "this position is reachable"
+      }
+    }
+  },
+  {
+    "id": "dsa_024",
+    "leetcode_number": 56,
+    "title": "Merge Intervals",
+    "topic": "Greedy",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "description": "Given an array of `intervals` where `intervals[i] = [start_i, end_i]`, merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.",
+    "constraints": [
+      "1 <= intervals.length <= 10^4",
+      "intervals[i].length == 2",
+      "0 <= start_i <= end_i <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "intervals = [[1,3],[2,6],[8,10],[15,18]]",
+        "output": "[[1,6],[8,10],[15,18]]",
+        "explanation": "Since intervals [1,3] and [2,6] overlap, merge them into [1,6]."
+      },
+      {
+        "input": "intervals = [[1,4],[4,5]]",
+        "output": "[[1,5]]",
+        "explanation": "Intervals [1,4] and [4,5] are considered overlapping (touching at 4)."
+      }
+    ],
+    "core_trick": "Sort intervals by start time. Initialize result with first interval. For each subsequent interval: if it overlaps with the last merged interval (start <= lastEnd), extend the end to max(lastEnd, currentEnd). Otherwise, push as a new interval. The sort guarantees we only need to look at the most recent merged interval.",
+    "algorithm": "Sort + Greedy Merge",
+    "time_complexity": "O(n log n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "greedy",
+      "intervals",
+      "sorting"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def merge(intervals):\n    intervals.sort()\n    merged = [intervals[0]]\n    for start, end in intervals[1:]:\n        if start <= merged[-1][1]:\n            merged[-1][1] = max(merged[-1][1], end)\n        else:\n            merged.append([start, end])\n    return merged",
+      "line_comments": {
+        "2": "sort by start time",
+        "3": "seed with first interval",
+        "5": "overlaps with last merged?",
+        "6": "extend the end",
+        "8": "no overlap → new interval"
+      }
+    }
+  },
+  {
+    "id": "dsa_025",
+    "leetcode_number": 215,
+    "title": "Kth Largest Element in an Array",
+    "topic": "Heap / Priority Queue",
+    "difficulty": "medium",
+    "frequency": "very_high",
+    "companies": [
+      "Meta",
+      "Amazon",
+      "Google",
+      "Microsoft"
+    ],
+    "description": "Given an integer array `nums` and an integer `k`, return the `k`th largest element in the array.\n\nNote that it is the `k`th largest element in the sorted order, not the `k`th distinct element.\n\nCan you solve it without sorting?",
+    "constraints": [
+      "1 <= k <= nums.length <= 10^5",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,2,1,5,6,4], k = 2",
+        "output": "5",
+        "explanation": "Sorted array is [1,2,3,4,5,6]. The 2nd largest element is 5."
+      },
+      {
+        "input": "nums = [3,2,3,1,2,4,5,5,6], k = 4",
+        "output": "4",
+        "explanation": "Sorted array is [1,2,2,3,3,4,5,5,6]. The 4th largest element is 4."
+      }
+    ],
+    "core_trick": "Min-heap approach: maintain a min-heap of size k. Push each element; when heap exceeds k, pop the smallest. After processing all elements, the heap top is the kth largest. Alternative: Quickselect partitions around a pivot and recurses into the relevant half — O(n) average but O(n²) worst case.",
+    "algorithm": "Min-Heap of Size K / Quickselect",
+    "time_complexity": "O(n log k) heap / O(n) avg quickselect",
+    "space_complexity": "O(k)",
+    "tags": [
+      "heap",
+      "kth_element",
+      "quickselect"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "import heapq\n\ndef findKthLargest(nums, k):\n    heap = []\n    for num in nums:\n        heapq.heappush(heap, num)\n        if len(heap) > k:\n            heapq.heappop(heap)\n    return heap[0]",
+      "line_comments": {
+        "4": "min-heap of size k",
+        "6": "push every number",
+        "7": "heap too big? evict smallest",
+        "9": "top of min-heap = kth largest"
+      }
+    }
+  },
+  {
+    "id": "dsa_026",
+    "leetcode_number": 169,
+    "title": "Majority Element",
+    "topic": "Named Algorithms",
+    "difficulty": "easy",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft",
+      "Apple"
+    ],
+    "description": "Given an array `nums` of size `n`, return the majority element.\n\nThe majority element is the element that appears more than `⌊n / 2⌋` times. You may assume that the majority element always exists in the array.",
+    "constraints": [
+      "n == nums.length",
+      "1 <= n <= 5 * 10^4",
+      "-10^9 <= nums[i] <= 10^9"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,2,3]",
+        "output": "3",
+        "explanation": "3 appears 2 out of 3 times (> ⌊3/2⌋ = 1)."
+      },
+      {
+        "input": "nums = [2,2,1,1,1,2,2]",
+        "output": "2",
+        "explanation": "2 appears 4 out of 7 times (> ⌊7/2⌋ = 3)."
+      }
+    ],
+    "core_trick": "Boyer-Moore Voting Algorithm: maintain a candidate and a count. For each element: if count is 0, set new candidate. If element matches candidate, count++. Otherwise count--. The majority element survives because it has more than n/2 votes — every 'cancellation' removes one majority and one minority, so the majority always remains.",
+    "algorithm": "Boyer-Moore Voting Algorithm",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "boyer_moore",
+      "voting",
+      "majority"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def majorityElement(nums):\n    candidate = None\n    count = 0\n    for num in nums:\n        if count == 0:\n            candidate = num\n        count += 1 if num == candidate else -1\n    return candidate",
+      "line_comments": {
+        "2": "current majority candidate",
+        "3": "running vote count",
+        "5": "count exhausted → new candidate",
+        "7": "same → vote for, different → vote against"
+      }
+    }
+  },
+  {
+    "id": "dsa_027",
+    "leetcode_number": 75,
+    "title": "Sort Colors",
+    "topic": "Named Algorithms",
+    "difficulty": "medium",
+    "frequency": "high",
+    "companies": [
+      "Microsoft",
+      "Amazon",
+      "Meta"
+    ],
+    "description": "Given an array `nums` with `n` objects colored red, white, or blue, sort them in-place so that objects of the same color are adjacent, with the colors in the order red (0), white (1), and blue (2).\n\nYou must solve this problem without using the library's sort function.\n\nCould you come up with a one-pass algorithm using only constant extra space?",
+    "constraints": [
+      "n == nums.length",
+      "1 <= n <= 300",
+      "nums[i] is either 0, 1, or 2."
+    ],
+    "examples": [
+      {
+        "input": "nums = [2,0,2,1,1,0]",
+        "output": "[0,0,1,1,2,2]",
+        "explanation": "All 0s moved left, 2s moved right, 1s stay in the middle."
+      },
+      {
+        "input": "nums = [2,0,1]",
+        "output": "[0,1,2]",
+        "explanation": "Single pass sorts all three values."
+      }
+    ],
+    "core_trick": "Dutch National Flag Algorithm (Dijkstra): three pointers — low, mid, high. If nums[mid]==0, swap with low, advance both. If nums[mid]==2, swap with high, shrink high (don't advance mid — swapped value is unexamined). If nums[mid]==1, just advance mid. Everything left of low is 0, right of high is 2, middle is 1.",
+    "algorithm": "Dutch National Flag (Dijkstra)",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "dutch_national_flag",
+      "three_pointers",
+      "partition"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def sortColors(nums):\n    lo, mid, hi = 0, 0, len(nums) - 1\n    while mid <= hi:\n        if nums[mid] == 0:\n            nums[lo], nums[mid] = nums[mid], nums[lo]\n            lo += 1\n            mid += 1\n        elif nums[mid] == 2:\n            nums[mid], nums[hi] = nums[hi], nums[mid]\n            hi -= 1\n        else:\n            mid += 1",
+      "line_comments": {
+        "2": "lo=next 0 slot, mid=current, hi=next 2 slot",
+        "4": "red → swap to low region",
+        "6": "advance both (swapped value is known)",
+        "8": "blue → swap to high region",
+        "10": "don't advance mid (swapped value unknown)",
+        "12": "white → already in place"
+      }
+    }
+  },
+  {
+    "id": "dsa_028",
+    "leetcode_number": 287,
+    "title": "Find the Duplicate Number",
+    "topic": "Named Algorithms",
+    "difficulty": "medium",
+    "frequency": "high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft"
+    ],
+    "description": "Given an array of integers `nums` containing `n + 1` integers where each integer is in the range `[1, n]` inclusive.\n\nThere is only one repeated number in `nums`, return this repeated number.\n\nYou must solve the problem without modifying the array `nums` and using only constant extra space.",
+    "constraints": [
+      "1 <= n <= 10^5",
+      "nums.length == n + 1",
+      "1 <= nums[i] <= n",
+      "There is only one repeated number, but it could be repeated more than once."
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,3,4,2,2]",
+        "output": "2",
+        "explanation": "2 is the only number that appears more than once."
+      },
+      {
+        "input": "nums = [3,1,3,4,2]",
+        "output": "3",
+        "explanation": "3 appears twice."
+      },
+      {
+        "input": "nums = [3,3,3,3,3]",
+        "output": "3",
+        "explanation": "3 is repeated multiple times."
+      }
+    ],
+    "core_trick": "Floyd's Tortoise and Hare on an array: treat each value as a pointer to the next index (nums[i] → next node). Since there's a duplicate, two indices point to the same place — forming a cycle. Phase 1: slow/fast pointers find the meeting point inside the cycle. Phase 2: reset one pointer to start, advance both at speed 1 — they meet at the cycle entrance, which is the duplicate.",
+    "algorithm": "Floyd's Tortoise and Hare (Cycle Detection)",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "floyd",
+      "cycle_detection",
+      "tortoise_hare"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def findDuplicate(nums):\n    slow = fast = nums[0]\n    while True:\n        slow = nums[slow]\n        fast = nums[nums[fast]]\n        if slow == fast:\n            break\n    slow = nums[0]\n    while slow != fast:\n        slow = nums[slow]\n        fast = nums[fast]\n    return slow",
+      "line_comments": {
+        "2": "start both at first element",
+        "4": "slow moves 1 step",
+        "5": "fast moves 2 steps",
+        "6": "they meet inside the cycle",
+        "8": "phase 2: reset slow to start",
+        "10": "both move 1 step now",
+        "12": "they meet at cycle entrance = duplicate"
+      }
+    }
+  },
+  {
+    "id": "dsa_029",
+    "leetcode_number": 136,
+    "title": "Single Number",
+    "topic": "Named Algorithms",
+    "difficulty": "easy",
+    "frequency": "very_high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Apple"
+    ],
+    "description": "Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one.\n\nYou must implement a solution with a linear runtime complexity and use only constant extra space.",
+    "constraints": [
+      "1 <= nums.length <= 3 * 10^4",
+      "-3 * 10^4 <= nums[i] <= 3 * 10^4",
+      "Each element appears twice except for one element which appears once."
+    ],
+    "examples": [
+      {
+        "input": "nums = [2,2,1]",
+        "output": "1",
+        "explanation": "1 is the only element that appears once."
+      },
+      {
+        "input": "nums = [4,1,2,1,2]",
+        "output": "4",
+        "explanation": "4 appears once; 1 and 2 appear twice each."
+      },
+      {
+        "input": "nums = [1]",
+        "output": "1",
+        "explanation": "Single element array."
+      }
+    ],
+    "core_trick": "XOR Cancellation: XOR all numbers together. Since a ^ a = 0 and a ^ 0 = a, every pair cancels itself out, leaving only the single number. This works because XOR is commutative and associative — order doesn't matter. result = nums[0] ^ nums[1] ^ ... ^ nums[n-1].",
+    "algorithm": "XOR Bit Manipulation",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "xor",
+      "bit_manipulation",
+      "cancellation"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def singleNumber(nums):\n    result = 0\n    for num in nums:\n        result ^= num\n    return result",
+      "line_comments": {
+        "2": "XOR identity: 0 ^ a = a",
+        "4": "pairs cancel: a ^ a = 0, lone value survives"
+      }
+    }
+  },
+  {
+    "id": "dsa_030",
+    "leetcode_number": 204,
+    "title": "Count Primes",
+    "topic": "Named Algorithms",
+    "difficulty": "medium",
+    "frequency": "high",
+    "companies": [
+      "Amazon",
+      "Microsoft",
+      "Google"
+    ],
+    "description": "Given an integer `n`, return the number of prime numbers that are strictly less than `n`.",
+    "constraints": [
+      "0 <= n <= 5 * 10^6"
+    ],
+    "examples": [
+      {
+        "input": "n = 10",
+        "output": "4",
+        "explanation": "There are 4 primes less than 10: 2, 3, 5, 7."
+      },
+      {
+        "input": "n = 0",
+        "output": "0",
+        "explanation": "No primes less than 0."
+      },
+      {
+        "input": "n = 1",
+        "output": "0",
+        "explanation": "No primes less than 1."
+      }
+    ],
+    "core_trick": "Sieve of Eratosthenes: create a boolean array of size n, all true. Starting from 2, mark all multiples of each prime as composite (false). Optimization: start marking from p² (smaller multiples already marked by smaller primes). Only iterate up to √n. Count remaining trues.",
+    "algorithm": "Sieve of Eratosthenes",
+    "time_complexity": "O(n log log n)",
+    "space_complexity": "O(n)",
+    "tags": [
+      "sieve",
+      "eratosthenes",
+      "primes",
+      "math"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def countPrimes(n):\n    if n < 2:\n        return 0\n    is_prime = [True] * n\n    is_prime[0] = is_prime[1] = False\n    for i in range(2, int(n**0.5) + 1):\n        if is_prime[i]:\n            for j in range(i*i, n, i):\n                is_prime[j] = False\n    return sum(is_prime)",
+      "line_comments": {
+        "4": "assume all numbers are prime",
+        "5": "0 and 1 are not prime",
+        "6": "only check up to sqrt(n)",
+        "8": "start marking from i² (smaller already done)",
+        "9": "mark all multiples as composite"
+      }
+    }
+  },
+  {
+    "id": "dsa_031",
+    "leetcode_number": 191,
+    "title": "Number of 1 Bits",
+    "topic": "Named Algorithms",
+    "difficulty": "easy",
+    "frequency": "high",
+    "companies": [
+      "Microsoft",
+      "Apple",
+      "Google"
+    ],
+    "description": "Given a positive integer `n`, write a function that returns the number of set bits in its binary representation (also known as the Hamming weight).",
+    "constraints": [
+      "1 <= n <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "n = 11 (binary: 1011)",
+        "output": "3",
+        "explanation": "The binary representation 1011 has three 1-bits."
+      },
+      {
+        "input": "n = 128 (binary: 10000000)",
+        "output": "1",
+        "explanation": "Only one set bit."
+      },
+      {
+        "input": "n = 2147483645 (binary: 1111111111111111111111111111101)",
+        "output": "30",
+        "explanation": "All bits set except one."
+      }
+    ],
+    "core_trick": "Brian Kernighan's Algorithm: n & (n - 1) clears the lowest set bit. Count how many times you can do this before n becomes 0. Why it works: subtracting 1 flips all bits from the rightmost set bit downward. AND-ing with original zeroes out that bit. This runs in O(number of set bits), not O(32).",
+    "algorithm": "Brian Kernighan's Bit Counting",
+    "time_complexity": "O(number of set bits)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "kernighan",
+      "bit_manipulation",
+      "hamming_weight"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def hammingWeight(n):\n    count = 0\n    while n:\n        n &= n - 1\n        count += 1\n    return count",
+      "line_comments": {
+        "4": "clears the lowest set bit",
+        "5": "one more 1-bit counted"
+      }
+    }
+  },
+  {
+    "id": "dsa_032",
+    "leetcode_number": 202,
+    "title": "Happy Number",
+    "topic": "Named Algorithms",
+    "difficulty": "easy",
+    "frequency": "high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Apple"
+    ],
+    "description": "Write an algorithm to determine if a number `n` is happy.\n\nA happy number is a number defined by the following process:\n- Starting with any positive integer, replace the number by the sum of the squares of its digits.\n- Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.\n- Those numbers for which this process ends in 1 are happy.\n\nReturn `true` if `n` is a happy number, and `false` if not.",
+    "constraints": [
+      "1 <= n <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "n = 19",
+        "output": "true",
+        "explanation": "1² + 9² = 82 → 8² + 2² = 68 → 6² + 8² = 100 → 1² + 0² + 0² = 1. Reached 1!"
+      },
+      {
+        "input": "n = 2",
+        "output": "false",
+        "explanation": "2 → 4 → 16 → 37 → 58 → 89 → 145 → 42 → 20 → 4 → ... (cycle detected, never reaches 1)."
+      }
+    ],
+    "core_trick": "Floyd's Cycle Detection on a math sequence: treat the digit-square-sum as the 'next pointer'. Slow computes one step, fast computes two. If they meet and the value isn't 1, there's a cycle → not happy. If either reaches 1 → happy. No HashSet needed — pure O(1) space.",
+    "algorithm": "Floyd's Cycle Detection (on math sequence)",
+    "time_complexity": "O(log n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "floyd",
+      "cycle_detection",
+      "math",
+      "digit_sum"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def isHappy(n):\n    def digit_sum(x):\n        s = 0\n        while x:\n            x, d = divmod(x, 10)\n            s += d * d\n        return s\n\n    slow = n\n    fast = digit_sum(n)\n    while fast != 1 and slow != fast:\n        slow = digit_sum(slow)\n        fast = digit_sum(digit_sum(fast))\n    return fast == 1",
+      "line_comments": {
+        "2": "sum of squares of digits",
+        "5": "extract last digit, square and add",
+        "9": "slow: 1 step, fast: 2 steps",
+        "10": "stop if reached 1 or cycle detected",
+        "13": "1 = happy, cycle = not happy"
+      }
+    }
+  },
+  {
+    "id": "dsa_033",
+    "leetcode_number": 41,
+    "title": "First Missing Positive",
+    "topic": "Named Algorithms",
+    "difficulty": "hard",
+    "frequency": "high",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Microsoft"
+    ],
+    "description": "Given an unsorted integer array `nums`, return the smallest missing positive integer.\n\nYou must implement an algorithm that runs in `O(n)` time and uses `O(1)` auxiliary space.",
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-2^31 <= nums[i] <= 2^31 - 1"
+    ],
+    "examples": [
+      {
+        "input": "nums = [3,4,-1,1]",
+        "output": "2",
+        "explanation": "1 is present, 2 is missing."
+      },
+      {
+        "input": "nums = [1,2,0]",
+        "output": "3",
+        "explanation": "1 and 2 are present, 3 is missing."
+      },
+      {
+        "input": "nums = [7,8,9,11,12]",
+        "output": "1",
+        "explanation": "1 is the smallest positive integer and it's missing."
+      }
+    ],
+    "core_trick": "Cyclic Sort: use the array itself as a hash table. Place each value n at index n-1 (swap nums[i] with nums[nums[i]-1] until correct or out of range). After sorting, scan for the first index where nums[i] != i+1 — that's the answer. The array becomes its own perfect hash function.",
+    "algorithm": "Cyclic Sort (Index as Hash)",
+    "time_complexity": "O(n)",
+    "space_complexity": "O(1)",
+    "tags": [
+      "cyclic_sort",
+      "in_place_hash",
+      "index_mapping"
+    ],
+    "reel_status": "pending",
+    "solution": {
+      "code": "def firstMissingPositive(nums):\n    n = len(nums)\n    for i in range(n):\n        while 1 <= nums[i] <= n and nums[nums[i]-1] != nums[i]:\n            nums[nums[i]-1], nums[i] = nums[i], nums[nums[i]-1]\n    for i in range(n):\n        if nums[i] != i + 1:\n            return i + 1\n    return n + 1",
+      "line_comments": {
+        "4": "value in valid range AND not in correct slot?",
+        "5": "swap nums[i] to its correct position (index nums[i]-1)",
+        "7": "find first index where value ≠ index+1",
+        "9": "all present → answer is n+1"
+      }
+    }
+  }
+]

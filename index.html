@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Reels — Question Bank</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #e0e0e0; }
+
+  .top-bar {
+    position: sticky; top: 0; z-index: 10;
+    background: #111; border-bottom: 1px solid #222;
+    padding: 16px 24px;
+  }
+  .top-bar h1 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 12px; }
+  .stats { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 12px; font-size: 13px; color: #888; }
+  .stats span { background: #1a1a1a; padding: 4px 10px; border-radius: 6px; }
+  .stats .num { color: #60a5fa; font-weight: 600; }
+
+  .controls { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .search-box {
+    flex: 1; min-width: 200px; padding: 8px 14px; border-radius: 8px;
+    border: 1px solid #333; background: #1a1a1a; color: #e0e0e0; font-size: 14px; outline: none;
+  }
+  .search-box:focus { border-color: #60a5fa; }
+  .search-box::placeholder { color: #555; }
+
+  select {
+    padding: 8px 12px; border-radius: 8px; border: 1px solid #333;
+    background: #1a1a1a; color: #e0e0e0; font-size: 13px; cursor: pointer; outline: none;
+  }
+  select:focus { border-color: #60a5fa; }
+
+  .layout { display: flex; height: calc(100vh - 140px); }
+
+  .sidebar {
+    width: 320px; min-width: 280px; overflow-y: auto; border-right: 1px solid #222;
+    background: #0f0f0f; padding: 8px;
+  }
+  .sidebar::-webkit-scrollbar { width: 6px; }
+  .sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+  .topic-group { margin-bottom: 6px; }
+  .topic-header {
+    padding: 8px 12px; font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; color: #60a5fa; cursor: pointer; display: flex;
+    justify-content: space-between; align-items: center; border-radius: 6px;
+  }
+  .topic-header:hover { background: #1a1a2a; }
+  .topic-header .count { color: #555; font-weight: 400; font-size: 11px; }
+  .topic-header .arrow { transition: transform 0.2s; font-size: 10px; }
+  .topic-header.collapsed .arrow { transform: rotate(-90deg); }
+
+  .topic-items { overflow: hidden; }
+  .topic-items.hidden { display: none; }
+
+  .q-item {
+    padding: 8px 12px 8px 20px; cursor: pointer; border-radius: 6px;
+    display: flex; align-items: center; gap: 8px; font-size: 13px; color: #bbb;
+    transition: background 0.15s;
+  }
+  .q-item:hover { background: #1a1a1a; }
+  .q-item.active { background: #1a2a3a; color: #fff; }
+  .q-item .lc-num { color: #666; font-size: 11px; min-width: 32px; }
+  .q-item .diff {
+    font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.3px;
+  }
+  .diff-easy { background: #0d3320; color: #4ade80; }
+  .diff-medium { background: #3b2f04; color: #fbbf24; }
+  .diff-hard { background: #3b0d0d; color: #f87171; }
+
+  .detail {
+    flex: 1; overflow-y: auto; padding: 32px 40px;
+  }
+  .detail::-webkit-scrollbar { width: 6px; }
+  .detail::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+
+  .detail-empty {
+    display: flex; align-items: center; justify-content: center;
+    height: 100%; color: #444; font-size: 16px;
+  }
+
+  .detail h2 { font-size: 24px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .detail .meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; margin-top: 8px; }
+  .tag {
+    font-size: 11px; padding: 3px 8px; border-radius: 4px;
+    background: #1a1a2a; color: #818cf8; font-weight: 500;
+  }
+  .tag.company { background: #1a2a1a; color: #4ade80; }
+
+  .section { margin-bottom: 24px; }
+  .section-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: #555; margin-bottom: 8px;
+  }
+  .section p, .section pre { font-size: 14px; line-height: 1.7; color: #ccc; }
+
+  .example-box {
+    background: #111; border: 1px solid #222; border-radius: 8px; padding: 16px;
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 1.6;
+  }
+  .example-box .label { color: #60a5fa; font-weight: 600; margin-bottom: 2px; }
+  .example-box .val { color: #e0e0e0; margin-bottom: 8px; }
+  .example-box .val:last-child { margin-bottom: 0; }
+  .example-box .expl { color: #888; font-style: italic; }
+
+  .trick-box {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border: 1px solid #2a2a4a; border-radius: 8px; padding: 16px;
+    font-size: 14px; line-height: 1.7; color: #c4b5fd;
+  }
+
+  .complexity-row {
+    display: flex; gap: 24px;
+  }
+  .complexity-item {
+    background: #111; border: 1px solid #222; border-radius: 8px; padding: 12px 16px;
+    flex: 1;
+  }
+  .complexity-item .clabel { font-size: 11px; color: #666; margin-bottom: 4px; }
+  .complexity-item .cval { font-size: 16px; font-weight: 600; color: #fbbf24; font-family: 'SF Mono', monospace; }
+
+  .algo-badge {
+    display: inline-block; background: #2d1f5e; color: #a78bfa; padding: 6px 14px;
+    border-radius: 6px; font-size: 14px; font-weight: 600;
+  }
+
+  .filter-count { font-size: 13px; color: #555; padding: 8px 0 0 4px; }
+
+  /* Ontology Tags */
+  .ontology-section { margin-bottom: 24px; }
+  .ontology-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .ontology-group { margin-bottom: 12px; }
+  .ontology-group-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: #555; margin-bottom: 6px;
+  }
+  .ontology-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 11px; padding: 4px 10px; border-radius: 5px;
+    font-weight: 500; cursor: default;
+  }
+  .ontology-tag .weight {
+    font-size: 9px; opacity: 0.7; font-weight: 400;
+  }
+  .ontology-tag.topic { background: #1a2a3a; color: #60a5fa; border: 1px solid #2a4a6a; }
+  .ontology-tag.pattern { background: #2a1a3a; color: #c084fc; border: 1px solid #4a2a6a; }
+  .ontology-tag.technique { background: #1a3a2a; color: #4ade80; border: 1px solid #2a6a4a; }
+  .ontology-tag.concept { background: #3a2a1a; color: #fbbf24; border: 1px solid #6a4a2a; }
+  .ontology-tag.algorithm { background: #3a1a2a; color: #f472b6; border: 1px solid #6a2a4a; }
+
+  .desc-text { font-size: 14px; line-height: 1.8; color: #ccc; white-space: pre-line; }
+  .desc-text code { background: #1a1a2a; color: #818cf8; padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+
+  .constraints-list { list-style: none; padding: 0; }
+  .constraints-list li {
+    font-size: 13px; color: #999; padding: 3px 0; font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .constraints-list li::before { content: '•'; color: #444; margin-right: 8px; }
+
+  .examples-grid { display: flex; flex-direction: column; gap: 12px; }
+  .example-box .example-num { color: #60a5fa; font-weight: 700; font-size: 11px; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px; }
+
+  .code-block {
+    background: #0d1117; border: 1px solid #1a2233; border-radius: 8px;
+    overflow-x: auto; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 13px; line-height: 1.7;
+  }
+  .code-block table { border-collapse: collapse; width: 100%; }
+  .code-line td { padding: 0 12px; white-space: pre; vertical-align: top; }
+  .code-line .ln {
+    color: #333; text-align: right; user-select: none; width: 28px;
+    padding-right: 14px; border-right: 1px solid #1a2233;
+  }
+  .code-line .code { color: #c9d1d9; padding-left: 14px; }
+  .code-line .comment-cell {
+    color: #6a9955; font-style: italic; padding-left: 16px;
+    white-space: nowrap; font-size: 12px; opacity: 0.9;
+  }
+  .code-line:hover { background: #161b22; }
+  .code-line.has-comment { background: #0d1520; }
+  .code-line.has-comment:hover { background: #111d2e; }
+
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .str { color: #a5d6ff; }
+  .num { color: #79c0ff; }
+  .op { color: #ff7b72; }
+  .cm { color: #6a9955; font-style: italic; }
+  .bi { color: #ffa657; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>DSA Reels — Question Bank</h1>
+  <div class="stats" id="stats"></div>
+  <div class="controls">
+    <input type="text" class="search-box" id="search" placeholder="Search questions, tricks, algorithms...">
+    <select id="diffFilter">
+      <option value="">All Difficulties</option>
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    <select id="freqFilter">
+      <option value="">All Frequencies</option>
+      <option value="very_high">Very High</option>
+      <option value="high">High</option>
+      <option value="medium">Medium</option>
+    </select>
+  </div>
+</div>
+
+<div class="layout">
+  <div class="sidebar" id="sidebar"></div>
+  <div class="detail" id="detail">
+    <div class="detail-empty">Select a question from the sidebar</div>
+  </div>
+</div>
+
+<script>
+const DATA_PATH = './writing/stories/dp-reels/questions.json';
+const NODES_PATH = './writing/stories/dp-reels/nodes.json';
+const EDGES_PATH = './writing/stories/dp-reels/question_edges.json';
+
+let questions = [];
+let nodes = {};
+let questionEdges = {};
+let activeId = null;
+let collapsedTopics = {};
+
+async function init() {
+  const [qRes, nRes, eRes] = await Promise.all([
+    fetch(DATA_PATH),
+    fetch(NODES_PATH),
+    fetch(EDGES_PATH)
+  ]);
+  questions = await qRes.json();
+
+  // Build nodes lookup
+  const nodesData = await nRes.json();
+  nodesData.nodes.forEach(n => { nodes[n.id] = n; });
+
+  // Build question edges lookup
+  const edgesData = await eRes.json();
+  edgesData.questions.forEach(q => { questionEdges[q.question_id] = q.edges; });
+
+  renderStats();
+  renderSidebar();
+  document.getElementById('search').addEventListener('input', renderSidebar);
+  document.getElementById('diffFilter').addEventListener('change', renderSidebar);
+  document.getElementById('freqFilter').addEventListener('change', renderSidebar);
+}
+
+function getFiltered() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const diff = document.getElementById('diffFilter').value;
+  const freq = document.getElementById('freqFilter').value;
+  return questions.filter(item => {
+    if (diff && item.difficulty !== diff) return false;
+    if (freq && item.frequency !== freq) return false;
+    if (q) {
+      const hay = [item.title, item.topic, item.core_trick, item.algorithm, item.description || '',
+        ...(item.tags || []), ...(item.companies || [])].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+function renderStats() {
+  const topics = [...new Set(questions.map(q => q.topic))];
+  const easy = questions.filter(q => q.difficulty === 'easy').length;
+  const med = questions.filter(q => q.difficulty === 'medium').length;
+  const hard = questions.filter(q => q.difficulty === 'hard').length;
+  const nodeCount = Object.keys(nodes).length;
+  document.getElementById('stats').innerHTML =
+    `<span><span class="num">${questions.length}</span> questions</span>` +
+    `<span><span class="num">${topics.length}</span> topics</span>` +
+    `<span><span class="num">${nodeCount}</span> ontology nodes</span>` +
+    `<span style="color:#4ade80">${easy} easy</span>` +
+    `<span style="color:#fbbf24">${med} medium</span>` +
+    `<span style="color:#f87171">${hard} hard</span>`;
+}
+
+function renderSidebar() {
+  const filtered = getFiltered();
+  const grouped = {};
+  filtered.forEach(q => {
+    if (!grouped[q.topic]) grouped[q.topic] = [];
+    grouped[q.topic].push(q);
+  });
+
+  const sidebar = document.getElementById('sidebar');
+  let html = '';
+  const topicOrder = [
+    'Arrays & Hashing', 'Two Pointers', 'Sliding Window', 'Stack',
+    'Binary Search', 'Linked Lists', 'Trees', 'Graphs',
+    'Dynamic Programming', 'Greedy', 'Heap / Priority Queue',
+    'Intervals', 'Tries', 'Backtracking', 'Bit Manipulation'
+  ];
+  const orderedTopics = topicOrder.filter(t => grouped[t]);
+  // add any not in the predefined order
+  Object.keys(grouped).forEach(t => { if (!orderedTopics.includes(t)) orderedTopics.push(t); });
+
+  for (const topic of orderedTopics) {
+    const items = grouped[topic];
+    const collapsed = collapsedTopics[topic];
+    html += `<div class="topic-group">`;
+    html += `<div class="topic-header ${collapsed ? 'collapsed' : ''}" onclick="toggleTopic('${topic}')">
+      <span>${topic} <span class="count">(${items.length})</span></span>
+      <span class="arrow">▼</span>
+    </div>`;
+    html += `<div class="topic-items ${collapsed ? 'hidden' : ''}">`;
+    for (const q of items) {
+      html += `<div class="q-item ${q.id === activeId ? 'active' : ''}" onclick="showDetail('${q.id}')">
+        <span class="lc-num">#${q.leetcode_number}</span>
+        <span style="flex:1">${q.title}</span>
+        <span class="diff diff-${q.difficulty}">${q.difficulty}</span>
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+
+  html += `<div class="filter-count">${filtered.length} of ${questions.length} shown</div>`;
+  sidebar.innerHTML = html;
+}
+
+function toggleTopic(topic) {
+  collapsedTopics[topic] = !collapsedTopics[topic];
+  renderSidebar();
+}
+
+function showDetail(id) {
+  activeId = id;
+  const q = questions.find(x => x.id === id);
+  if (!q) return;
+
+  // re-render sidebar to update active state
+  renderSidebar();
+
+  const detail = document.getElementById('detail');
+  detail.innerHTML = `
+    <h2>#${q.leetcode_number} — ${q.title}</h2>
+    <div class="meta">
+      <span class="diff diff-${q.difficulty}" style="font-size:12px;padding:4px 10px;border-radius:5px;">${q.difficulty}</span>
+      <span class="tag">${q.topic}</span>
+      <span class="tag" style="background:#2a1a1a;color:#fbbf24;">freq: ${q.frequency.replace('_', ' ')}</span>
+      ${(q.companies || []).map(c => `<span class="tag company">${c}</span>`).join('')}
+    </div>
+
+    <div class="section">
+      <div class="section-label">Description</div>
+      <div class="desc-text">${(q.description || q.problem || '').replace(/`([^`]+)`/g, '<code>$1</code>')}</div>
+    </div>
+
+    ${(q.constraints && q.constraints.length) ? `<div class="section">
+      <div class="section-label">Constraints</div>
+      <ul class="constraints-list">
+        ${q.constraints.map(c => `<li>${c}</li>`).join('')}
+      </ul>
+    </div>` : ''}
+
+    <div class="section">
+      <div class="section-label">Examples</div>
+      <div class="examples-grid">
+        ${(q.examples || (q.example ? [q.example] : [])).map((ex, i) => `
+          <div class="example-box">
+            <div class="example-num">Example ${i + 1}</div>
+            <div class="label">Input</div>
+            <div class="val">${ex.input}</div>
+            <div class="label">Output</div>
+            <div class="val">${ex.output}</div>
+            <div class="expl">${ex.explanation}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Core Trick</div>
+      <div class="trick-box">${q.core_trick}</div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Algorithm</div>
+      <span class="algo-badge">${q.algorithm}</span>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Complexity</div>
+      <div class="complexity-row">
+        <div class="complexity-item">
+          <div class="clabel">Time</div>
+          <div class="cval">${q.time_complexity}</div>
+        </div>
+        <div class="complexity-item">
+          <div class="clabel">Space</div>
+          <div class="cval">${q.space_complexity}</div>
+        </div>
+      </div>
+    </div>
+
+    ${q.solution ? `<div class="section">
+      <div class="section-label">Solution (Python)</div>
+      <div class="code-block">
+        <table>${renderCode(q.solution.code, q.solution.line_comments)}</table>
+      </div>
+    </div>` : ''}
+
+    <div class="section">
+      <div class="section-label">Tags</div>
+      <div class="meta">
+        ${(q.tags || []).map(t => `<span class="tag">${t}</span>`).join('')}
+      </div>
+    </div>
+
+    ${renderOntologyTags(q.id)}
+  `;
+}
+
+function renderCode(code, comments) {
+  const kwSet = new Set(['def','return','for','while','in','if','elif','else','and','or','not','import','from','True','False','None','break','continue','class','with','as','is','lambda','yield','pass','raise','try','except','finally']);
+  const biSet = new Set(['len','max','min','range','enumerate','int','float','str','list','dict','set','print','sum','abs','sorted','zip','map','filter','all','any','divmod','type','isinstance','super','property','staticmethod','classmethod','hasattr','getattr','setattr','heapq','heappush','heappop','Counter','deque','bisect_left','collections','defaultdict']);
+
+  function highlight(line) {
+    // First escape HTML special characters
+    let result = line
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // Use Unicode private-use markers that won't appear in code or be matched by regex
+    // This prevents "class" in '<span class="num">' from being matched as Python keyword
+    const OPEN = '\uE000';  // Start tag marker
+    const CLOSE = '\uE001'; // End tag marker
+
+    // Apply highlighting with placeholder markers instead of real HTML
+    result = result
+      .replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')/g, OPEN + 'str' + CLOSE + '$1' + OPEN + '/str' + CLOSE)
+      .replace(/\b(\d+)\b/g, OPEN + 'num' + CLOSE + '$1' + OPEN + '/num' + CLOSE)
+      .replace(/\b([a-zA-Z_]\w*)\b/g, (m) => {
+        if (kwSet.has(m)) return OPEN + 'kw' + CLOSE + m + OPEN + '/kw' + CLOSE;
+        if (biSet.has(m)) return OPEN + 'bi' + CLOSE + m + OPEN + '/bi' + CLOSE;
+        return m;
+      })
+      .replace(/(#.*)/g, OPEN + 'cm' + CLOSE + '$1' + OPEN + '/cm' + CLOSE);
+
+    // Convert markers to real HTML at the end
+    result = result
+      .replace(/\uE000(\w+)\uE001/g, '<span class="$1">')
+      .replace(/\uE000\/\w+\uE001/g, '</span>');
+
+    return result;
+  }
+
+  const lines = code.split('\n');
+  return lines.map((line, i) => {
+    const lineNum = i + 1;
+    const comment = comments && comments[lineNum];
+    const cls = comment ? 'code-line has-comment' : 'code-line';
+    return `<tr class="${cls}"><td class="ln">${lineNum}</td><td class="code">${highlight(line)}</td>${comment ? `<td class="comment-cell"># ${comment}</td>` : '<td></td>'}</tr>`;
+  }).join('');
+}
+
+function renderOntologyTags(questionId) {
+  const edges = questionEdges[questionId];
+  if (!edges || edges.length === 0) return '';
+
+  // Group edges by node type
+  const groups = { topic: [], pattern: [], algorithm: [], technique: [], concept: [] };
+  const typeLabels = {
+    topic: 'Topics',
+    pattern: 'Patterns',
+    algorithm: 'Algorithms',
+    technique: 'Techniques',
+    concept: 'Concepts'
+  };
+
+  edges.forEach(edge => {
+    const node = nodes[edge.to];
+    if (node) {
+      groups[node.type].push({ ...node, weight: edge.weight, edgeType: edge.type });
+    }
+  });
+
+  let html = '<div class="ontology-section"><div class="section-label">Knowledge Graph</div>';
+
+  for (const [type, items] of Object.entries(groups)) {
+    if (items.length === 0) continue;
+    // Sort by weight descending
+    items.sort((a, b) => b.weight - a.weight);
+    html += `<div class="ontology-group">`;
+    html += `<div class="ontology-group-label">${typeLabels[type]}</div>`;
+    html += `<div class="ontology-grid">`;
+    items.forEach(item => {
+      const weightPct = Math.round(item.weight * 100);
+      html += `<span class="ontology-tag ${type}" title="${item.description}">
+        ${item.title}
+        <span class="weight">${weightPct}%</span>
+      </span>`;
+    });
+    html += `</div></div>`;
+  }
+
+  html += '</div>';
+  return html;
+}
+
+init();
+</script>
+</body>
+</html>

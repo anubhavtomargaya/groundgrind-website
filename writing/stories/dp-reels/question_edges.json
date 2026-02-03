@@ -1,0 +1,363 @@
+{
+  "version": "1.0.0",
+  "description": "Edges linking questions to backbone nodes",
+  "edge_types": ["categorized", "tests", "applies", "demonstrates"],
+  "questions": [
+    {
+      "question_id": "dsa_001",
+      "title": "Two Sum",
+      "edges": [
+        {"to": "T:array", "type": "categorized", "weight": 1.0},
+        {"to": "P:one_pass_hash", "type": "tests", "weight": 1.0},
+        {"to": "X:hashmap_lookup", "type": "applies", "weight": 1.0},
+        {"to": "C:complement", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_002",
+      "title": "Subarray Sum Equals K",
+      "edges": [
+        {"to": "T:array", "type": "categorized", "weight": 1.0},
+        {"to": "P:subarray_sum", "type": "tests", "weight": 1.0},
+        {"to": "X:prefix_sum", "type": "applies", "weight": 1.0},
+        {"to": "X:hashmap_lookup", "type": "applies", "weight": 0.9},
+        {"to": "C:prefix_sum", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_003",
+      "title": "Product of Array Except Self",
+      "edges": [
+        {"to": "T:array", "type": "categorized", "weight": 1.0},
+        {"to": "P:prefix_suffix_product", "type": "tests", "weight": 1.0},
+        {"to": "X:prefix_sum", "type": "applies", "weight": 0.8},
+        {"to": "C:suffix_product", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:space_optimization", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_004",
+      "title": "Maximum Subarray",
+      "edges": [
+        {"to": "T:array", "type": "categorized", "weight": 1.0},
+        {"to": "T:dp", "type": "categorized", "weight": 0.8},
+        {"to": "P:linear_dp", "type": "tests", "weight": 0.9},
+        {"to": "A:kadane", "type": "tests", "weight": 1.0},
+        {"to": "C:running_max", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:space_optimization", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_005",
+      "title": "Trapping Rain Water",
+      "edges": [
+        {"to": "T:two_pointers", "type": "categorized", "weight": 1.0},
+        {"to": "P:two_pointer_converge", "type": "tests", "weight": 1.0},
+        {"to": "X:two_pointers", "type": "applies", "weight": 1.0},
+        {"to": "C:left_boundary", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:right_boundary", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:running_max", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_006",
+      "title": "3Sum",
+      "edges": [
+        {"to": "T:two_pointers", "type": "categorized", "weight": 1.0},
+        {"to": "P:two_pointer_converge", "type": "tests", "weight": 1.0},
+        {"to": "X:two_pointers", "type": "applies", "weight": 1.0},
+        {"to": "X:sorting", "type": "applies", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_007",
+      "title": "Longest Substring Without Repeating Characters",
+      "edges": [
+        {"to": "T:sliding_window", "type": "categorized", "weight": 1.0},
+        {"to": "T:string", "type": "categorized", "weight": 0.8},
+        {"to": "P:sliding_window_variable", "type": "tests", "weight": 1.0},
+        {"to": "X:sliding_window", "type": "applies", "weight": 1.0},
+        {"to": "X:hashmap_lookup", "type": "applies", "weight": 0.9},
+        {"to": "C:last_seen_index", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:window_validity", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_008",
+      "title": "Minimum Window Substring",
+      "edges": [
+        {"to": "T:sliding_window", "type": "categorized", "weight": 1.0},
+        {"to": "T:string", "type": "categorized", "weight": 0.8},
+        {"to": "P:sliding_window_variable", "type": "tests", "weight": 1.0},
+        {"to": "X:sliding_window", "type": "applies", "weight": 1.0},
+        {"to": "C:frequency_map", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:window_validity", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_009",
+      "title": "Largest Rectangle in Histogram",
+      "edges": [
+        {"to": "T:stack", "type": "categorized", "weight": 1.0},
+        {"to": "P:histogram_area", "type": "tests", "weight": 1.0},
+        {"to": "X:monotonic_stack", "type": "applies", "weight": 1.0},
+        {"to": "C:monotonicity", "type": "demonstrates", "weight": 0.9},
+        {"to": "C:left_boundary", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_010",
+      "title": "Daily Temperatures",
+      "edges": [
+        {"to": "T:stack", "type": "categorized", "weight": 1.0},
+        {"to": "P:next_greater", "type": "tests", "weight": 1.0},
+        {"to": "X:monotonic_stack", "type": "applies", "weight": 1.0},
+        {"to": "C:monotonicity", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_011",
+      "title": "Search in Rotated Sorted Array",
+      "edges": [
+        {"to": "T:binary_search", "type": "categorized", "weight": 1.0},
+        {"to": "P:modified_binary_search", "type": "tests", "weight": 1.0},
+        {"to": "X:binary_search", "type": "applies", "weight": 1.0},
+        {"to": "C:valid_range", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_012",
+      "title": "Median of Two Sorted Arrays",
+      "edges": [
+        {"to": "T:binary_search", "type": "categorized", "weight": 1.0},
+        {"to": "P:modified_binary_search", "type": "tests", "weight": 1.0},
+        {"to": "X:binary_search", "type": "applies", "weight": 1.0},
+        {"to": "C:left_boundary", "type": "demonstrates", "weight": 0.7},
+        {"to": "C:right_boundary", "type": "demonstrates", "weight": 0.7}
+      ]
+    },
+    {
+      "question_id": "dsa_013",
+      "title": "Reverse Linked List",
+      "edges": [
+        {"to": "T:linked_list", "type": "categorized", "weight": 1.0},
+        {"to": "P:list_reversal", "type": "tests", "weight": 1.0},
+        {"to": "X:pointer_reversal", "type": "applies", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_014",
+      "title": "Merge k Sorted Lists",
+      "edges": [
+        {"to": "T:linked_list", "type": "categorized", "weight": 1.0},
+        {"to": "T:heap", "type": "categorized", "weight": 0.9},
+        {"to": "P:k_way_merge", "type": "tests", "weight": 1.0},
+        {"to": "X:heap_operations", "type": "applies", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_015",
+      "title": "Binary Tree Maximum Path Sum",
+      "edges": [
+        {"to": "T:tree", "type": "categorized", "weight": 1.0},
+        {"to": "P:tree_path_sum", "type": "tests", "weight": 1.0},
+        {"to": "X:dfs", "type": "applies", "weight": 1.0},
+        {"to": "X:recursion", "type": "applies", "weight": 1.0},
+        {"to": "C:running_max", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_016",
+      "title": "Validate Binary Search Tree",
+      "edges": [
+        {"to": "T:tree", "type": "categorized", "weight": 1.0},
+        {"to": "P:range_validation", "type": "tests", "weight": 1.0},
+        {"to": "X:dfs", "type": "applies", "weight": 1.0},
+        {"to": "X:recursion", "type": "applies", "weight": 1.0},
+        {"to": "C:valid_range", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_017",
+      "title": "Lowest Common Ancestor of a Binary Tree",
+      "edges": [
+        {"to": "T:tree", "type": "categorized", "weight": 1.0},
+        {"to": "P:lca", "type": "tests", "weight": 1.0},
+        {"to": "X:dfs", "type": "applies", "weight": 1.0},
+        {"to": "X:recursion", "type": "applies", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_018",
+      "title": "Course Schedule",
+      "edges": [
+        {"to": "T:graph", "type": "categorized", "weight": 1.0},
+        {"to": "P:topological_order", "type": "tests", "weight": 1.0},
+        {"to": "X:dfs", "type": "applies", "weight": 1.0},
+        {"to": "X:topological_sort", "type": "applies", "weight": 1.0},
+        {"to": "X:cycle_detection", "type": "applies", "weight": 0.9},
+        {"to": "C:three_color", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:adjacency_list", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_019",
+      "title": "Word Ladder",
+      "edges": [
+        {"to": "T:graph", "type": "categorized", "weight": 1.0},
+        {"to": "T:string", "type": "categorized", "weight": 0.7},
+        {"to": "P:shortest_path_unweighted", "type": "tests", "weight": 1.0},
+        {"to": "X:bfs", "type": "applies", "weight": 1.0},
+        {"to": "C:wildcard_pattern", "type": "demonstrates", "weight": 0.9},
+        {"to": "C:visited_set", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_020",
+      "title": "House Robber",
+      "edges": [
+        {"to": "T:dp", "type": "categorized", "weight": 1.0},
+        {"to": "P:linear_dp", "type": "tests", "weight": 1.0},
+        {"to": "X:tabulation", "type": "applies", "weight": 1.0},
+        {"to": "C:state_definition", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:transition", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:space_optimization", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_021",
+      "title": "Coin Change",
+      "edges": [
+        {"to": "T:dp", "type": "categorized", "weight": 1.0},
+        {"to": "P:unbounded_knapsack", "type": "tests", "weight": 1.0},
+        {"to": "X:tabulation", "type": "applies", "weight": 1.0},
+        {"to": "C:state_definition", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:transition", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:optimal_substructure", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_022",
+      "title": "Longest Increasing Subsequence",
+      "edges": [
+        {"to": "T:dp", "type": "categorized", "weight": 1.0},
+        {"to": "P:lis", "type": "tests", "weight": 1.0},
+        {"to": "A:patience_sort", "type": "tests", "weight": 1.0},
+        {"to": "X:binary_search", "type": "applies", "weight": 0.9},
+        {"to": "C:monotonicity", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_023",
+      "title": "Word Break",
+      "edges": [
+        {"to": "T:dp", "type": "categorized", "weight": 1.0},
+        {"to": "T:string", "type": "categorized", "weight": 0.7},
+        {"to": "P:linear_dp", "type": "tests", "weight": 0.9},
+        {"to": "X:tabulation", "type": "applies", "weight": 1.0},
+        {"to": "C:state_definition", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:transition", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_024",
+      "title": "Merge Intervals",
+      "edges": [
+        {"to": "T:greedy", "type": "categorized", "weight": 1.0},
+        {"to": "P:interval_merge", "type": "tests", "weight": 1.0},
+        {"to": "X:sorting", "type": "applies", "weight": 1.0},
+        {"to": "X:greedy_selection", "type": "applies", "weight": 0.9},
+        {"to": "C:greedy_choice", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_025",
+      "title": "Kth Largest Element in an Array",
+      "edges": [
+        {"to": "T:heap", "type": "categorized", "weight": 1.0},
+        {"to": "P:k_selection", "type": "tests", "weight": 1.0},
+        {"to": "X:heap_operations", "type": "applies", "weight": 1.0},
+        {"to": "A:quickselect", "type": "tests", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_026",
+      "title": "Majority Element",
+      "edges": [
+        {"to": "T:array", "type": "categorized", "weight": 1.0},
+        {"to": "A:boyer_moore", "type": "tests", "weight": 1.0},
+        {"to": "C:cancellation", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:space_optimization", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_027",
+      "title": "Sort Colors",
+      "edges": [
+        {"to": "T:array", "type": "categorized", "weight": 1.0},
+        {"to": "A:dutch_national_flag", "type": "tests", "weight": 1.0},
+        {"to": "X:three_pointers", "type": "applies", "weight": 1.0},
+        {"to": "X:partitioning", "type": "applies", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_028",
+      "title": "Find the Duplicate Number",
+      "edges": [
+        {"to": "T:linked_list", "type": "categorized", "weight": 0.6},
+        {"to": "T:array", "type": "categorized", "weight": 0.8},
+        {"to": "A:floyd_cycle", "type": "tests", "weight": 1.0},
+        {"to": "X:cycle_detection", "type": "applies", "weight": 1.0},
+        {"to": "C:cycle_entrance", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_029",
+      "title": "Single Number",
+      "edges": [
+        {"to": "T:bit", "type": "categorized", "weight": 1.0},
+        {"to": "A:xor_single", "type": "tests", "weight": 1.0},
+        {"to": "X:bit_operations", "type": "applies", "weight": 1.0},
+        {"to": "C:cancellation", "type": "demonstrates", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_030",
+      "title": "Count Primes",
+      "edges": [
+        {"to": "T:math", "type": "categorized", "weight": 1.0},
+        {"to": "A:sieve", "type": "tests", "weight": 1.0},
+        {"to": "C:index_mapping", "type": "demonstrates", "weight": 0.8}
+      ]
+    },
+    {
+      "question_id": "dsa_031",
+      "title": "Number of 1 Bits",
+      "edges": [
+        {"to": "T:bit", "type": "categorized", "weight": 1.0},
+        {"to": "A:kernighan", "type": "tests", "weight": 1.0},
+        {"to": "X:bit_operations", "type": "applies", "weight": 1.0}
+      ]
+    },
+    {
+      "question_id": "dsa_032",
+      "title": "Happy Number",
+      "edges": [
+        {"to": "T:math", "type": "categorized", "weight": 1.0},
+        {"to": "A:floyd_cycle", "type": "tests", "weight": 1.0},
+        {"to": "X:cycle_detection", "type": "applies", "weight": 1.0},
+        {"to": "C:cycle_entrance", "type": "demonstrates", "weight": 0.9}
+      ]
+    },
+    {
+      "question_id": "dsa_033",
+      "title": "First Missing Positive",
+      "edges": [
+        {"to": "T:array", "type": "categorized", "weight": 1.0},
+        {"to": "A:cyclic_sort", "type": "tests", "weight": 1.0},
+        {"to": "C:index_mapping", "type": "demonstrates", "weight": 1.0},
+        {"to": "C:space_optimization", "type": "demonstrates", "weight": 0.9}
+      ]
+    }
+  ]
+}
